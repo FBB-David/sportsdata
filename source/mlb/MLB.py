@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from .Bench import Bench
-from .Game import Game
+from .InningsAllXml import InningsAllXml
 from .Scoreboard import Scoreboard
 
 import xml
@@ -125,10 +125,9 @@ class MLB:
         if returnXml == True:
             return data
 
-        print(data)
-        game = Scoreboard()
-        xml.sax.parseString(data, Game)
-        return game
+        innings_all_xml = InningsAllXml()
+        xml.sax.parseString(data, innings_all_xml)
+        return innings_all_xml.game
 
     def inningHitXml(self, game_id):
         """
