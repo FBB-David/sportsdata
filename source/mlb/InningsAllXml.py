@@ -32,4 +32,7 @@ class InningsAllXml(xml.sax.ContentHandler):
             self.currentAtBat = AtBat()
             for k,v in attrs.items():
                 setattr(self.currentAtBat,k,v)
-        elif name = 'pitch'
+        elif name == 'pitch':
+            self.currentAtBat.pitches.append(attrs.items())
+        elif name == 'runner':
+            self.currentAtBat.runners.append(dict(attrs))
