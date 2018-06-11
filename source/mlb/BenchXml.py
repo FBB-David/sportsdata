@@ -1,6 +1,6 @@
 import xml.sax
 
-class Bench(xml.sax.ContentHandler):
+class BenchXml(xml.sax.ContentHandler):
 
 
     def __init__(self):

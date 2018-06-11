@@ -1,0 +1,2 @@
+class Bench:
+    pass

@@ -1,7 +1,8 @@
 from urllib.request import urlopen
-from .Bench import Bench
+from .BenchXml import BenchXml
 from .InningsAllXml import InningsAllXml
-from .Scoreboard import Scoreboard
+from .BoxscoreXml import BoxscoreXml
+from .ScoreboardXml import ScoreboardXml
 
 import xml
 
@@ -16,44 +17,54 @@ class MLB:
         url = "http://gdx.mlb.com/components/copyright.txt"
         print(url)
 
-    def bench(self, game_id):
-        """
-        1. Par
-        :param game_id:
-        :return:
-        """
-        xmlData = self.benchXml(game_id)
-        benchXmlData = Bench()
-        xml.sax.parseString(xmlData, benchXmlData)
-        print(len(benchXmlData.homePitchers))
-        print(len(benchXmlData.awayPitchers))
 
-
-    def benchXml(self, game_id):
+    def benchXml(self, game_id, returnXml = False):
         """
+        Retrieves and optionally processes the bench.xml for a given game
+        Args:
+            game_id:
 
-        :param game_id:
-        :return:
+        Returns:
+
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/bench.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        print(url)
         x = urlopen(url)
-        data = x.read()
-        return data
+        xml_data = x.read()
+
+        if returnXml == True:
+            return xml_data
+
+        bench_xml = BenchXml()
+        xml.sax.parseString(xml_data, bench_xml)
+        return bench_xml
 
 
-    def benchOXml(self, game_id):
+    def benchOXml(self, game_id, returnXml = False):
         """
+        Retrieves and optionally processes the benchO.xml for a given game
+        (The 'official' bench xml file)
 
-        :param game_id:
-        :return:
+        Args:
+            game_id:
+            returnXml:
+
+        Returns:
+
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/benchO.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        print(url)
+        x = urlopen(url)
+        xml_data = x.read()
+
+        if returnXml == True:
+            return xml_data
+
+        bench_xml = BenchXml()
+        xml.sax.parseString(xml_data, bench_xml)
+        return bench_xml
 
     def boxscoreXml(self, game_id):
         """
@@ -164,6 +175,29 @@ class MLB:
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/rawboxscore.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
+        x = urlopen(url)
+        data = x.read()
+
+        if returnXml:
+            return data
+
+        boxscore_xml = BoxscoreXml()
+        xml.sax.parseString(data, boxscore_xml)
+        return boxscore_xml.boxscore
+
+
+    def scoreboardXml(self, lookup_date, returnXml = False):
+        """
+        Retrieves, and optionally processes the scoreboard.xml file for a given date.
+        :param:
+            lookup_date
+
+        :returns:
+            Scoreboard, if returnXml == False
+            (XML) string, if returnXml == True
+        """
+        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1:02d}/day_{2:02d}/scoreboard.xml"
+        url = url.format(lookup_date.year, lookup_date.month, lookup_date.day)
         print(url)
         x = urlopen(url)
         data = x.read()
@@ -171,31 +205,6 @@ class MLB:
         if returnXml:
             return data
 
-        boxscore = Scoreboard()
-        xml.sax.parseString(data, boxscore)
-        return boxscore
-
-
-    def scoreboardXml(self, game_id, returnXml = False):
-        """
-        Retrieves, and optionally processes the scoreboard.xml file for a given game.
-
-        :param:
-            game_id
-
-        :returns:
-            Scoreboard, if returnXml == False
-            (XML) string, if returnXml == True
-        """
-        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/scoreboard.xml"
-        year, month, day, _discard = game_id.split('_', 3)
-        url = url.format(year, month, day, game_id)
-        x = urlopen(url)
-        data = x.read()
-
-        if returnXml:
-            return data
-
-        scoreboard = Scoreboard()
-        xml.sax.parseString(data, scoreboard)
-        return scoreboard
+        scoreboardXml = ScoreboardXml()
+        xml.sax.parseString(data, scoreboardXml)
+        return scoreboardXml.scoreboard
