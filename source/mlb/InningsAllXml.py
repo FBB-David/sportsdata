@@ -8,8 +8,7 @@ class InningsAllXml(xml.sax.ContentHandler):
         self.currentInning = None
         self.currentAtBat  = None
 
-        self.game = Game(attrs)
-
+        self.game = Game()
 
     def startElement(self, name, attrs):
         if name == 'game':

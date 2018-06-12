@@ -1,6 +1,8 @@
 from urllib.request import urlopen
 from .BenchXml import BenchXml
 from .InningsAllXml import InningsAllXml
+from .InningHit import InningHitXml
+from .InningScoresXml import InningScoresXml
 from .BoxscoreXml import BoxscoreXml
 from .ScoreboardXml import ScoreboardXml
 
@@ -130,6 +132,7 @@ class MLB:
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning/inning_all.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
+        print(url)
         x = urlopen(url)
         data = x.read()
 
@@ -140,19 +143,26 @@ class MLB:
         xml.sax.parseString(data, innings_all_xml)
         return innings_all_xml.game
 
-    def inningHitXml(self, game_id):
+    def inningHitXml(self, game_id, returnXml = False):
         """
 
         :param game_id:
         :return:
         """
-        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning_hit.xml"
+        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning/inning_hit.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        print(url)
+        x = urlopen(url)
+        xml_data = x.read()
 
+        if returnXml == True:
+            return xml_data
 
-    def inningScoresXml(self, game_id):
+        inning_hit_xml = InningHitXml()
+        xml.sax.parseString(xml_data, inning_hit_xml)
+        return inning_hit_xml.hits
+
+    def inningScoresXml(self, game_id, returnXml = False):
         """
 
         :param:
@@ -160,10 +170,20 @@ class MLB:
 
         :return:
         """
-        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning_Scores.xml"
+        url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning/inning_Scores.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        print(url)
+        x = urlopen(url)
+        xml_data = x.read()
+
+        if returnXml:
+            return xml_data
+
+        inning_scores_xml = InningScoresXml()
+        xml.sax.parseString(xml_data,inning_scores_xml)
+        return inning_scores_xml.hits
+
+
 
 
     def rawboxscoreXml(self, game_id, returnXml = False):
