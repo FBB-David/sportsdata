@@ -13,11 +13,13 @@ class MLB:
 
     def copyrightTxt(self):
         """
-
-        :return:
+        Retrieves the MLBAM License governing the usage of their data
+        :return: (String) Copyright Text
         """
         url = "http://gdx.mlb.com/components/copyright.txt"
-        print(url)
+        x = urlopen(url)
+        copyright_text = x.read()
+        return copyright_text
 
 
     def benchXml(self, game_id, returnXml = False):
@@ -40,7 +42,7 @@ class MLB:
 
         bench_xml = BenchXml()
         xml.sax.parseString(xml_data, bench_xml)
-        return bench_xml
+        return bench_xml.bench
 
 
     def benchOXml(self, game_id, returnXml = False):
@@ -66,7 +68,7 @@ class MLB:
 
         bench_xml = BenchXml()
         xml.sax.parseString(xml_data, bench_xml)
-        return bench_xml
+        return bench_xml.bench
 
     def boxscoreXml(self, game_id):
         """
@@ -107,11 +109,12 @@ class MLB:
         1. Retrieve the game_events.xml file
         :param game_id:
         :return:
+        @todo Finish this endpoint
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/game_events.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-
+        print(url)
 
         #return urlopen(GAME_URL.format(year, month, day, game_id,
         #                               'game_events.xml'))
@@ -169,10 +172,12 @@ class MLB:
             game_id
 
         :return:
+        @todo Correctly Parse this xml file
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/inning/inning_Scores.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
+        print(url)
         x = urlopen(url)
         xml_data = x.read()
 

@@ -1,29 +1,24 @@
 import xml.sax
-
+from sportsdata.models.Bench import Bench
 class BenchXml(xml.sax.ContentHandler):
 
 
     def __init__(self):
-        self.awayPitchers = []
-        self.awayBatters  = []
-        self.awayTeamID   = None
-        self.homePitchers = []
-        self.homeBatters  = []
-        self.homeTeamID   = None
-        self.isHomeOrAway = None
+        self.bench = Bench()
+
 
     def startElement(self, tag, attributes):
         if tag == "away":
-            self.isHomeOrAway = tag
-            self.awayTeamID   = attributes['tid']
-        elif tag == 'batter' and self.isHomeOrAway == 'away':
-            self.awayBatters.append(dict(attributes))
-        elif tag == 'batter' and self.isHomeOrAway == 'home':
-            self.homeBatters.append(dict(attributes))
-        elif tag == "pitcher" and self.isHomeOrAway == 'away':
-            self.awayPitchers.append(dict(attributes))
-        elif tag == "pitcher" and self.isHomeOrAway == 'home':
-            self.homePitchers.append(dict(attributes))
+            self.bench.isHomeOrAway = tag
+            self.bench.awayTeamID   = attributes['tid']
+        elif tag == 'batter' and self.bench.isHomeOrAway == 'away':
+            self.bench.awayBatters.append(dict(attributes))
+        elif tag == 'batter' and self.bench.isHomeOrAway == 'home':
+            self.bench.homeBatters.append(dict(attributes))
+        elif tag == "pitcher" and self.bench.isHomeOrAway == 'away':
+            self.bench.awayPitchers.append(dict(attributes))
+        elif tag == "pitcher" and self.bench.isHomeOrAway == 'home':
+            self.bench.homePitchers.append(dict(attributes))
         elif tag == "home":
-            self.isHomeOrAway = tag
-            self.homeTeamID = attributes['tid']
+            self.bench.isHomeOrAway = tag
+            self.bench.homeTeamID = attributes['tid']
