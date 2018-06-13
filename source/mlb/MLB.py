@@ -5,6 +5,7 @@ from .InningHit import InningHitXml
 from .InningScoresXml import InningScoresXml
 from .BoxscoreXml import BoxscoreXml
 from .ScoreboardXml import ScoreboardXml
+from .GameXml import GameXml
 
 import xml
 
@@ -60,6 +61,7 @@ class MLB:
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/benchO.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
+
         x = urlopen(url)
         xml_data = x.read()
 
@@ -70,10 +72,12 @@ class MLB:
         xml.sax.parseString(xml_data, bench_xml)
         return bench_xml.bench
 
-    def boxscoreXml(self, game_id):
+    def boxscoreXml(self, game_id, returnXml = False):
         """
+        Retrieves, and optionally processes the boxscore.xml file
 
-        :param game_id:
+        Args:
+            game_id: Identifier for the game
         :return:
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/boxscore.xml"
@@ -81,8 +85,19 @@ class MLB:
         url = url.format(year, month, day, game_id)
         print(url)
 
-    def gameXml(self, game_id):
+        x = urlopen(url)
+        xml_data = x.read()
+
+        if returnXml == True:
+            return xml_data
+
+        boxscore_xml = BoxscoreXml()
+        xml.sax.parseString(xml_data,boxscore_xml)
+        return boxscore_xml.boxscore
+
+    def gameXml(self, game_id, returnXml = False):
         """
+        Retrieves, and optionally processes the game.xml file
 
         :param game_id:
         :return:
@@ -91,6 +106,17 @@ class MLB:
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
         print(url)
+
+        x = urlopen(url)
+        xml_data = x.read()
+
+        if returnXml == True:
+            return xml_data
+
+        game_xml = GameXml()
+        xml.sax.parseString(xml_data, game_xml)
+        return game_xml.game
+
 
 
     def gameday_SynXml(self, game_id):
