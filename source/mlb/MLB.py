@@ -1,13 +1,14 @@
 from urllib.request import urlopen
-from .BenchXml import BenchXml
-from .InningsAllXml import InningsAllXml
-from .InningHit import InningHitXml
-from .InningScoresXml import InningScoresXml
-from .BoxscoreXml import BoxscoreXml
-from .ScoreboardXml import ScoreboardXml
-from .GameXml import GameXml
-
 import xml
+from sportsdata.source.mlb.handlers.BenchXml import BenchXml
+from sportsdata.source.mlb.handlers.InningsAllXml import InningsAllXml
+from sportsdata.source.mlb.handlers.InningHit import InningHitXml
+from sportsdata.source.mlb.handlers.InningScoresXml import InningScoresXml
+from sportsdata.source.mlb.handlers.BoxscoreXml import BoxscoreXml
+from sportsdata.source.mlb.handlers.ScoreboardXml import ScoreboardXml
+from sportsdata.source.mlb.handlers.GameXml import GameXml
+from sportsdata.source.mlb.handlers.GamedaySynXml import GamedaySynXml
+from sportsdata.source.mlb.handlers.GameEventsXml import GameEventsXml
 
 class MLB:
     domain_name = 'mlb.com'
@@ -27,7 +28,7 @@ class MLB:
         """
         Retrieves and optionally processes the bench.xml for a given game
         Args:
-            game_id:
+            game_id: Identifier for the game
 
         Returns:
 
@@ -52,7 +53,7 @@ class MLB:
         (The 'official' bench xml file)
 
         Args:
-            game_id:
+            game_id: Identifier for the game
             returnXml:
 
         Returns:
@@ -99,8 +100,9 @@ class MLB:
         """
         Retrieves, and optionally processes the game.xml file
 
-        :param game_id:
-        :return:
+        Args:
+            game_id: Identifier for the game
+        Returns:
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/game.xml"
         year, month, day, _discard = game_id.split('_', 3)
@@ -117,9 +119,7 @@ class MLB:
         xml.sax.parseString(xml_data, game_xml)
         return game_xml.game
 
-
-
-    def gameday_SynXml(self, game_id):
+    def gameday_SynXml(self, game_id, returnXml = False):
         """
 
         :param game_id:
@@ -129,21 +129,38 @@ class MLB:
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
         print(url)
+        x = urlopen(url)
+        xml_data = x.read()
 
-    def gameEventsXml(self, game_id):
+        if returnXml == True:
+            return xml_data
+
+        gameday_syn_xml = GamedaySynXml()
+        xml.sax.parseString(xml_data,gameday_syn_xml)
+
+
+    def gameEventsXml(self, game_id, returnXml = False):
         """
-        1. Retrieve the game_events.xml file
-        :param game_id:
-        :return:
-        @todo Finish this endpoint
+        Retrieve, and optionally process, the game_events.xml file
+
+        Args:
+            game_id: Identifier for the game
+
+        Returns:
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/game_events.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        print(url)
 
-        #return urlopen(GAME_URL.format(year, month, day, game_id,
-        #                               'game_events.xml'))
+        x = urlopen(url)
+        xml_data = x.read()
+
+        if returnXml == True:
+            return xml_data
+
+        game_events_xml = GameEventsXml()
+        xml.sax.parseString(xml_data,game_events_xml)
+        return game_events_xml.game
 
 
     def inningsAllXml(self, game_id, returnXml = False):

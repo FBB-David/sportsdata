@@ -8,8 +8,7 @@ class GameXml(xml.sax.ContentHandler):
 
     def startElement(self, name, attrs):
         if name == 'game':
-
-            self.game = Game(**attrs)
+             self.game = Game(**attrs)
         elif name == 'team' and attrs['type'] == 'home':
             self.game.home_team = Bunch(**attrs)
         elif name == 'team' and attrs['type'] == 'away':

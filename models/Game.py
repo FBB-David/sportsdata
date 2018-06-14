@@ -1,8 +1,7 @@
-from .Bunch import Bunch
 class Game(dict):
-    def __init__(self, **kwargs):
-        dict.__init__(self,kwargs)
-        self.__dict__.update(kwargs)
+    def __init__(self, **kw):
+        dict.__init__(self, kw)
+        self.__dict__.update(kw)
 
         # Assigned via game.xml
         self.home_team= None
@@ -11,3 +10,7 @@ class Game(dict):
 
         # Assigned via ????
         self.innings = []
+
+        # Assigned Via game_events.xml
+        self.at_bats = []
+
