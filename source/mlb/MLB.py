@@ -87,7 +87,7 @@ class MLB:
         xml.sax.parseString(xml_data,boxscore_xml)
         return boxscore_xml.boxscore
 
-    def careerHitting(self,player_id,game_type,returnJson=False):
+    def careerHittingJson(self,player_id,game_type,returnJson=False):
         """
 
         Args:
@@ -98,7 +98,73 @@ class MLB:
         Returns:
 
         """
-        url = "/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
+        url = url.format(game_type, player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def careerHittingLeagueJson(self,player_id,game_type,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            game_type:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_career_hitting_lg.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
+        url = url.format(game_type, player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def careerPitchingJson(self,player_id,game_type,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            game_type:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
+        url = url.format(game_type, player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def careerPitchingLeagueJson(self,player_id,game_type,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            game_type:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_career_pitching_lg.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
         url = url.format(game_type, player_id)
         x = urlopen(url)
         json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
@@ -344,7 +410,7 @@ class MLB:
         Returns:
 
         """
-        url = "http://lookup-service-prod.mlb.com/ json/named.search_player_all.bam?sport_code = 'mlb'"
+        url = "http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code = 'mlb'"
 
 
         if (active_sw):
