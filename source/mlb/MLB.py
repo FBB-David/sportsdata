@@ -1,5 +1,7 @@
-from urllib.request import urlopen
+import chardet
+import json
 import xml
+from urllib.request import urlopen
 from sportsdata.source.mlb.handlers.BenchXml import BenchXml
 from sportsdata.source.mlb.handlers.InningsAllXml import InningsAllXml
 from sportsdata.source.mlb.handlers.InningHit import InningHitXml
@@ -12,17 +14,6 @@ from sportsdata.source.mlb.handlers.GameEventsXml import GameEventsXml
 
 class MLB:
     domain_name = 'mlb.com'
-
-    def copyrightTxt(self):
-        """
-        Retrieves the MLBAM License governing the usage of their data
-        :return: (String) Copyright Text
-        """
-        url = "http://gdx.mlb.com/components/copyright.txt"
-        x = urlopen(url)
-        copyright_text = x.read()
-        return copyright_text
-
 
     def benchXml(self, game_id, returnXml = False):
         """
@@ -95,6 +86,38 @@ class MLB:
         boxscore_xml = BoxscoreXml()
         xml.sax.parseString(xml_data,boxscore_xml)
         return boxscore_xml.boxscore
+
+    def careerHitting(self,player_id,game_type,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            game_type:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "/json/named.sport_career_hitting.bam?league_list_id='mlb'&game_type={0}&player_id={1}"
+        url = url.format(game_type, player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def copyrightTxt(self):
+        """
+        Retrieves the MLBAM License governing the usage of their data
+        :return: (String) Copyright Text
+        """
+        url = "http://gdx.mlb.com/components/copyright.txt"
+        x = urlopen(url)
+        copyright_text = x.read()
+        return copyright_text
 
     def gameXml(self, game_id, returnXml = False):
         """
@@ -208,7 +231,7 @@ class MLB:
         xml.sax.parseString(xml_data, inning_hit_xml)
         return inning_hit_xml.hits
 
-    def inningScoresXml(self, game_id, returnXml = False):
+    def inningScoresXml(self, game_id, returnXml=False):
         """
 
         :param:
@@ -232,7 +255,40 @@ class MLB:
         return inning_scores_xml.hits
 
 
+    def playerInfoJson(self, player_id, returnJson=False):
+        """
+        Retrieves, and optionally process, the player_info.bam JSON endpoint
 
+        Args:
+            player_id:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='{0}'"
+        url = url.format(player_id)
+        print(url)
+        x = urlopen(url)
+        json_data = str(x.read(),'ISO-8859-1').encode('utf8')
+
+        if (returnJson==True):
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def playerTeams(self, season=None, player_id=None):
+        """
+
+        Args:
+            player_id: Player ID (Required)
+            season:
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.player_teams.bam?season='{0}'&player_id='{1}'"
+
+        url = url.format(season, player_id)
 
     def rawboxscoreXml(self, game_id, returnXml = False):
         """
@@ -276,3 +332,76 @@ class MLB:
         scoreboardXml = ScoreboardXml()
         xml.sax.parseString(data, scoreboardXml)
         return scoreboardXml.scoreboard
+
+
+    def searchPlayerAllJson(self,active_sw=None,name_part=None,returnJson=False):
+        """
+
+        Args:
+            active_sw:
+            name_part:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/ json/named.search_player_all.bam?sport_code = 'mlb'"
+
+
+        if (active_sw):
+            url += "&active_sw={0}".format(active_sw)
+
+        if (name_part):
+            url += "&name_part={0}".format(name_part)
+
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+
+    def sportHitting(self,player_id, game_type, season, returnJson=False):
+        """
+
+        Args:
+            player_id:
+            game_type:
+            season:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type={0}&season={1}&player_id={2}"
+        url = url.format(game_type,season,player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def sportPitching(self, player_id, game_type, season, returnJson=False):
+        """
+        Args:
+            game_type:
+            season:
+            player_id
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.sport_pitching_tm.bam?league_list_id='mlb'&game_type={0}&season={1}&player_id={2}"
+        url = url.format(game_type,season,player_id)
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+           return json_data
+
+        data = json.loads(json_data)
+        return data
