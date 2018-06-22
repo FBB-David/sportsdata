@@ -333,7 +333,6 @@ class MLB:
         """
         url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='{0}'"
         url = url.format(player_id)
-        print(url)
         x = urlopen(url)
         json_data = str(x.read(),'ISO-8859-1').encode('utf8')
 
@@ -355,6 +354,56 @@ class MLB:
         url = "http://lookup-service-prod.mlb.com/json/named.player_teams.bam?season='{0}'&player_id='{1}'"
 
         url = url.format(season, player_id)
+
+    def projectedHittingJson(self,player_id,season=None,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            season:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.proj_pecota_hitting.bam?player_id={0}".format(player_id)
+
+        if season!=None:
+            url += "&season={0}".format(season)
+
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
+
+    def projectedPitchingJson(self,player_id,season=None,returnJson=False):
+        """
+
+        Args:
+            player_id:
+            season:
+            returnJson:
+
+        Returns:
+
+        """
+        url = "http://lookup-service-prod.mlb.com/json/named.proj_pecota_pitching.bam?player_id={0}".format(player_id)
+
+        if season!=None:
+            url += "&season={0}".format(season)
+
+        x = urlopen(url)
+        json_data = str(x.read(), 'ISO-8859-1').encode('utf8')
+
+        if returnJson:
+            return json_data
+
+        data = json.loads(json_data)
+        return data
 
     def rawboxscoreXml(self, game_id, returnXml = False):
         """
@@ -429,7 +478,7 @@ class MLB:
         return data
 
 
-    def sportHitting(self,player_id, game_type, season, returnJson=False):
+    def sportHittingJson(self,player_id, game_type, season, returnJson=False):
         """
 
         Args:
@@ -452,7 +501,7 @@ class MLB:
         data = json.loads(json_data)
         return data
 
-    def sportPitching(self, player_id, game_type, season, returnJson=False):
+    def sportPitchingJson(self, player_id, game_type, season, returnJson=False):
         """
         Args:
             game_type:
