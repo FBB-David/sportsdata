@@ -323,12 +323,11 @@ class MLB:
         url = "http://lookup-service-prod.mlb.com/json/named.player_info.bam?sport_code='mlb'&player_id='{0}'"
         url = url.format(player_id)
         req = requests.get(url)
-        json_data = str(req.text,'ISO-8859-1').encode('utf8')
 
         if (returnJson==True):
-            return json_data
+            return req.text
 
-        data = json.loads(json_data)
+        data = json.loads(req.text)
         return data['player_info']['queryResults']['row']
 
     def playerTeams(self, season=None, player_id=None):
