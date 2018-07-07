@@ -1,6 +1,6 @@
 import xml.sax
-from sportsdata.models.Game import Game
-from sportsdata.models.Inning import Inning
+from sportsdata.models import Game
+from sportsdata.models import Inning
 from sportsdata.models.AtBat import AtBat
 
 class InningsAllXml(xml.sax.ContentHandler):

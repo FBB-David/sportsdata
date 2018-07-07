@@ -1,3 +1,4 @@
+import logging
 import requests
 import requests_cache
 import json
@@ -14,10 +15,43 @@ from sportsdata.source.mlb.handlers.GameEventsXml import GameEventsXml
 
 class MLB:
     domain_name = 'mlb.com'
+    pitch_types = { 'CH':'Changeup',
+                    'CU':'Curveball',
+                    'FC':'Cutter',
+                    'EP':'Eephus',
+                    'FO':'Forkball',
+                    'FA':'Four-Seam Fastball',
+                    'KN':'Knuckleball',
+                    'KC':'Knuckle-curve',
+                    'SC':'Screwball',
+                    'SI':'Sinker',
+                    'SL':'Slider',
+                    'FS':'Splitter',
+                    'FT':'Two-Seam Fastball'
+                    }
 
-    def __init__(self):
-        requests_cache.install_cache('sportsdata', backend='sqlite', expire_after=1209600)
+    def __init__(self, cache_name='sportsdata.mlb', cache_backend='sqlite', cache_expire_after=1209600):
+        if cache_name != None:
+            requests_cache.install_cache(cache_name, backend=cache_backend, expire_after=cache_expire_after)
 
+
+    def _getRequest(self, url, no_cache=False):
+        """
+        Get URL from cache unless it was disabled
+        Args:
+            url: URL to retrieve
+            no_cache: Controls if Cache will be checked
+
+        Returns:
+            req
+
+        """
+        if (no_cache==False):
+            req = requests.get(url)
+        else:
+            with requests_cache.disabled():
+                req = requests.get(url)
+        return req
 
     def benchXml(self, game_id, returnXml = False):
         """
@@ -222,7 +256,7 @@ class MLB:
         xml.sax.parseString(req.text,gameday_syn_xml)
 
 
-    def gameEventsXml(self, game_id, returnXml = False):
+    def gameEventsXml(self, game_id, returnXml = False, no_cache=False):
         """
         Retrieve, and optionally process, the game_events.xml file
 
@@ -234,14 +268,14 @@ class MLB:
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/gid_{3}/game_events.xml"
         year, month, day, _discard = game_id.split('_', 3)
         url = url.format(year, month, day, game_id)
-        req = requests.get(url)
-        print(url)
-        print(req.from_cache)
+        req = self._getRequest(url, no_cache)
+        #print(url)
         if returnXml == True:
             return req.text
 
         game_events_xml = GameEventsXml()
         xml.sax.parseString(req.text,game_events_xml)
+        game_events_xml.game.game_id = game_id
         return game_events_xml.game
 
 
@@ -412,7 +446,7 @@ class MLB:
         return boxscore_xml.boxscore
 
 
-    def scoreboardXml(self, lookup_date, returnXml = False):
+    def scoreboardXml(self, lookup_date, returnXml=False, no_cache=False):
         """
         Retrieves, and optionally processes the scoreboard.xml file for a given date.
         :param:
@@ -424,14 +458,14 @@ class MLB:
         """
         url = "http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1:02d}/day_{2:02d}/scoreboard.xml"
         url = url.format(lookup_date.year, lookup_date.month, lookup_date.day)
-        r = requests.get(url)
-        print(url)
+        req = self._getRequest(url,no_cache)
+        logging.debug("scoreboardXml URL: {0}".format(url))
 
         if returnXml:
-            return r.text
+            return req.text
 
         scoreboardXml = ScoreboardXml()
-        xml.sax.parseString(r.text, scoreboardXml)
+        xml.sax.parseString(req.text, scoreboardXml)
         return scoreboardXml.scoreboard
 
 

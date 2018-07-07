@@ -1,5 +1,5 @@
 import xml.sax
-from sportsdata.models.Bench import Bench
+from sportsdata.models import Bench
 class BenchXml(xml.sax.ContentHandler):
 
 

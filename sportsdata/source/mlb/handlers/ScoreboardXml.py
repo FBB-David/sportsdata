@@ -1,6 +1,6 @@
 import xml.sax
-from sportsdata.models.Scoreboard import Scoreboard
-from sportsdata.models.Game import Game
+from sportsdata.models import Scoreboard
+from sportsdata.models import Game
 
 class ScoreboardXml(xml.sax.ContentHandler):
     """

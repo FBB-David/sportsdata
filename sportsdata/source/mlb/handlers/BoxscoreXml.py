@@ -1,5 +1,5 @@
 import xml.sax
-from sportsdata.models.Boxscore import Boxscore
+from sportsdata.models import Boxscore
 
 class BoxscoreXml(xml.sax.ContentHandler):
     """
