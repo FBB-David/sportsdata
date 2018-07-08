@@ -7,7 +7,7 @@ setuptools.setup(
     name="sportsdata",
     version="0.0.1",
     author="David Scott Orkin",
-    author_email="orange.cardinal@gmail.com",
+    author_email="orange.cardinal.technology@gmail.com",
     description="APIs for gathering data from professional sport websites",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ),
 )
