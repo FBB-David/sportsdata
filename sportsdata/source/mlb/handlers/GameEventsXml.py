@@ -1,7 +1,7 @@
 import xml.sax
-from sportsdata.models import Game
+from sportsdata.models.Game import Game
 from sportsdata.models.AtBat import AtBat
-from sportsdata.models import Bunch
+from sportsdata.models.Bunch import Bunch
 
 class GameEventsXml(xml.sax.ContentHandler):
     def __init__(self):
