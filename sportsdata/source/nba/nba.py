@@ -61,17 +61,36 @@ class NBA:
         data = json.loads(req.text)
         return data
 
-    def boxscorescoringv2(self):
-        url = self.base_url.format("boxscorescoringv2")
-        logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
-        print(req.text)
+    def boxscore_scoring(self, game_id, start_period, end_period, start_range, end_range, range_type):
+        """
 
-    def boxscoresummaryv2(self):
-        url = self.base_url.format("boxscoresummaryv2")
-        logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        Args:
+            game_id: Identifier for the given Game
+            start_period:
+            end_period:
+            start_range:
+            end_range:
+            range_type:
+
+        Returns:
+
+        """
+
+        url     = self.base_url.format("boxscorescoringv2")
+        params  = {'GameID'         :   game_id         ,
+                   'StartPeriod'    :   start_period    ,   'EndPeriod' :   end_period,
+                   'StartRange'     :   start_range     ,   'EndRange'  :   end_range, 'RangeType'  :   range_type}
+        req     = requests.get(url, headers=self.headers, params=params)
         print(req.text)
+        data    = json.loads(req.text)
+        return data
+
+    def boxscore_summary(self, game_id):
+        url     = self.base_url.format("boxscoresummaryv2")
+        params  = {'GameID' : game_id}
+        req     = requests.get(url, headers=self.headers, params=params)
+        data = json.loads(req.text)
+        return data
 
     def boxscoretraditionalv2(self):
         url = self.base_url.format("boxscoretraditionalv2")
