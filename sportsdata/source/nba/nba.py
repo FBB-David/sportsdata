@@ -54,11 +54,12 @@ class NBA:
         req = requests.get(url, headers=self.headers)
         print(req.text)
 
-    def boxscoreplayertrackv2(self):
+    def boxscore_player_track(self, game_id):
         url = self.base_url.format("boxscoreplayertrackv2")
-        logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
-        print(req.text)
+        params  = {'GameID': game_id}
+        req = requests.get(url, headers=self.headers, params=params)
+        data = json.loads(req.text)
+        return data
 
     def boxscorescoringv2(self):
         url = self.base_url.format("boxscorescoringv2")
@@ -405,10 +406,10 @@ class NBA:
         return data
 
     def scoreboardv2(self,game_date, leauge_id, day_offset):
-        url = self.base_url.format("scoreboardv2")
-        params = {'GameDate':game_date,'LeagueID':leauge_id,'DayOffset':day_offset}
-        req = requests.get(url,headers=self.headers,params=params)
-        data = json.loads(req.text)
+        url     = self.base_url.format("scoreboardv2")
+        params  = {'GameDate':game_date,'LeagueID':leauge_id,'DayOffset':day_offset}
+        req     = requests.get(url,headers=self.headers,params=params)
+        data    = json.loads(req.text)
         return data
 
     def shotchartdetail(self):
@@ -508,14 +509,19 @@ class NBA:
         print(req.text)
 
 
-    def teamvsplayer(self):
+    def team_vs_player(self):
         url = self.base_url.format("teamvsplayer")
         req = requests.get(url, headers=self.headers)
         print(req.text)
 
-    def teamyearbyyearstats(self):
+    def team_year_by_years(self, league_id, season_type, per_mode, team_id):
+        params  =   {'LeagueID'     :   league_id,
+                     'SeasonType'   :   season_type,
+                     'PerMode'      :   per_mode    ,
+                     'TeamID'       :   team_id
+                     }
         url = self.base_url.format("teamyearbyyearstats")
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     def videoStatus(self):
