@@ -13,6 +13,8 @@ class ResponseParser(object):
             if rs['name'] == 'PlayerStats':
                 for row in rs['rowSet']:
                     player = dict(zip([h.lower() for h in rs['headers']], row))
+                    hours, seconds = player['min'].split(':')
+                    player['seconds_played'] = int(hours) * 60 + int(seconds)
                     boxscore.players.append(player)
             elif rs['name'] == 'TeamStats':
                 for row in rs['rowSet']:
