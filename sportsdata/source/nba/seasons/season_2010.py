@@ -1,7 +1,7 @@
 from datetime import date
 
 
-class NBA_Season_2000(object):
+class NBA_Season_2010(object):
     def __init__(self):
         self.description    = "2000–01 NBA season"
         self.start_date     = date(year=2010,month=10, day=31)
