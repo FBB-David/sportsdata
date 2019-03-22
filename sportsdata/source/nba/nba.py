@@ -527,9 +527,39 @@ class NBA:
         print(req.text)
 
 
-    def teamplayeronoffsummary(self):
+    def team_player_on_off_summary(self, team_id, measure_type, per_mode, plus_minus, pace_adjust, rank, season_type,
+                                   outcome, location, month, season_segment, date_from , date_to, opponent_team_id,
+                                   vs_conference, vs_division, game_segment, period, last_n_games):
+        """
+
+        Returns:
+
+
+        """
+
+        params  =   {
+                    'TeamID'            : team_id           ,
+                    'MeasureType'       : measure_type      ,
+                    'PerMode'           : per_mode          ,
+                    'PlusMinus'         : plus_minus        ,
+                    'PaceAdjust'        : pace_adjust       ,
+                    'Rank'              : rank              ,
+                    'SeasonType'        : season_type       ,
+                    'Outcome'           : outcome           ,
+                    'Location'          : location          ,
+                    'Month'             : month             ,
+                    'SeasonSegment'     : season_segment    ,
+                    'DateFrom'          : date_from         ,
+                    'DateTo'            : date_to           ,
+                    'OpponentTeamID'    : opponent_team_id  ,
+                    'VsConference'      : vs_conference     ,
+                    'VsDivision'        : vs_division       ,
+                    'GameSegment'       : game_segment      ,
+                    'Period'            : period            ,
+                    'LastNGames'        : last_n_games
+        }
         url = self.base_url.format("teamplayeronoffsummary")
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
 
@@ -548,7 +578,18 @@ class NBA:
         req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
-    def videoStatus(self):
+    def video_status(self,game_date, league_id):
+        """
+
+        Args:
+            game_date:
+            league_id:
+
+        Returns:
+
+        """
+        params  =   {'LeagueID' :   league_id,
+                     'GameDate' :   game_date}
         url = self.base_url.format("videoStatus")
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
