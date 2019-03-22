@@ -1,6 +1,10 @@
 import requests
+import requests_cache
 import logging
 import json
+
+from sportsdata.source.nba.response_parser import ResponseParser
+requests_cache.install_cache('sportsdata', expire_after=60*60*6) #Cache for 6 hours
 
 class NBA:
 
@@ -17,9 +21,9 @@ class NBA:
 
     def allstarBallotPredictor(self, west_players, east_players, game_id, start, end):
         url = self.base_url.format("allstarballotpredictor")
-        params = {'WestPlayer1':west_players[0], 'WestPlayer2':west_players[1],
-                  'WestPlayer3':west_players[2], 'WestPlayer4':west_players[3],
-                  'WestPlayer5':west_players[4], 'EastPlayer1': east_players[0],
+        params = {'WestPlayer1': west_players[0], 'WestPlayer2': west_players[1],
+                  'WestPlayer3': west_players[2], 'WestPlayer4': west_players[3],
+                  'WestPlayer5': west_players[4], 'EastPlayer1': east_players[0],
                   'EastPlayer2': east_players[1], 'EastPlayer3': east_players[2],
                   'EastPlayer4': east_players[3], 'EastPlayer5': east_players[4],
                   'GameID':game_id, 'StartPeriod':start, 'EndPeriod':end
@@ -57,8 +61,8 @@ class NBA:
     def boxscore_player_track(self, game_id):
         url = self.base_url.format("boxscoreplayertrackv2")
         params  = {'GameID': game_id}
-        req = requests.get(url, headers=self.headers, params=params)
-        data = json.loads(req.text)
+        req     = requests.get(url, headers=self.headers, params=params)
+        data    = ResponseParser.boxscore_player_track(req)
         return data
 
     def boxscore_scoring(self, game_id, start_period, end_period, start_range, end_range, range_type):
@@ -88,8 +92,8 @@ class NBA:
     def boxscore_summary(self, game_id):
         url     = self.base_url.format("boxscoresummaryv2")
         params  = {'GameID' : game_id}
-        req     = requests.get(url, headers=self.headers, params=params)
-        data = json.loads(req.text)
+        resp    = requests.get(url, headers=self.headers, params=params)
+        data    = ResponseParser.boxscore_summary(resp)
         return data
 
     def boxscoretraditionalv2(self):
@@ -424,11 +428,12 @@ class NBA:
         data = json.loads(req.text)
         return data
 
-    def scoreboardv2(self,game_date, leauge_id, day_offset):
+    def scoreboard_v2(self,game_date, leauge_id, day_offset):
         url     = self.base_url.format("scoreboardv2")
         params  = {'GameDate':game_date,'LeagueID':leauge_id,'DayOffset':day_offset}
         req     = requests.get(url,headers=self.headers,params=params)
-        data    = json.loads(req.text)
+        data    = ResponseParser.scoreboard_v2(req)
+
         return data
 
     def shotchartdetail(self):
