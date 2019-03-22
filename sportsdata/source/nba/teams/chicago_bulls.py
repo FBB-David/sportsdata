@@ -1,4 +1,4 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class ChicagoBulls(NBA_Team):

@@ -1,4 +1,4 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class LosAngelesLakers(NBA_Team):
@@ -13,4 +13,4 @@ class LosAngelesLakers(NBA_Team):
         super().__init__()
         self.full_name  = "Los Angeles Lakers"
         self.name       = "Lakers"
-        self.team_id    = None
+        self.team_id    = 1610612747

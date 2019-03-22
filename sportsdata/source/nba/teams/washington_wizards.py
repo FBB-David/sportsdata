@@ -1,9 +1,9 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class WashingtonWizards(NBA_Team):
     """
-    NBA Golden State Warriors Static Information
+    NBA's Washington Wizards Static Information
 
     """
 
@@ -13,4 +13,4 @@ class WashingtonWizards(NBA_Team):
         super().__init__()
         self.full_name  = "Washington Wizards"
         self.name       = "Wizards"
-        self.team_id    = None
+        self.team_id    = 1610612764

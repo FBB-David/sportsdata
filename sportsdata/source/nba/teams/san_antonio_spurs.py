@@ -1,5 +1,5 @@
 
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class SanAntonioSpurs(NBA_Team):
@@ -14,3 +14,4 @@ class SanAntonioSpurs(NBA_Team):
         super().__init__()
         self.full_name  = "San Antonio Spurs"
         self.name       = "Spurs"
+        self.team_id    = 1610612759

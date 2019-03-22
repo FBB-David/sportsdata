@@ -1,4 +1,4 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class MinnesotaTimberwolves(NBA_Team):
@@ -13,4 +13,4 @@ class MinnesotaTimberwolves(NBA_Team):
         super().__init__()
         self.full_name  = "Minnesota Timberwolves"
         self.name       = "Timberwolves"
-        self.team_id    = None
+        self.team_id    = 1610612750

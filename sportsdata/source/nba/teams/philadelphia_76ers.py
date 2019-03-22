@@ -1,9 +1,9 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class Philadelphia76ers(NBA_Team):
     """
-    NBA Golden State Warriors Static Information
+    NBA's Philadelphia 76ers Static Information
 
     """
 
@@ -12,5 +12,5 @@ class Philadelphia76ers(NBA_Team):
         """
         super().__init__()
         self.full_name  = "Philadelphia 76ers"
-        self.name       = "Suns"
-        self.team_id    = None
+        self.name       = "76ers"
+        self.team_id    = 1610612755

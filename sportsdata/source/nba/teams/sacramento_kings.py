@@ -1,9 +1,9 @@
-from sportsdata.source.nba.team import NBA_Team
+from sportsdata.source.nba.nba_team import NBA_Team
 
 
 class SacramentoKings(NBA_Team):
     """
-    NBA Los Angeles Clippers Static Information
+    NBA's Sacramento Kings Static Information
 
     """
 
@@ -13,4 +13,4 @@ class SacramentoKings(NBA_Team):
         super().__init__()
         self.full_name  = "Sacramento Kings"
         self.name       = "Kings"
-        self.team_id    = None
+        self.team_id    = 1610612758
