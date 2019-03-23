@@ -1,7 +1,7 @@
 from sportsdata.source.nba.nba_team import NBA_Team
 
 
-class Nuggets(NBA_Team):
+class DenverNuggets(NBA_Team):
     def __init__(self):
         self.full_name  = "Denver Nuggets"
         self.name       = "Nuggets"
