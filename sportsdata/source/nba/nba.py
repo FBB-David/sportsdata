@@ -19,7 +19,7 @@ class NBA:
     }
     league_ids = {'nba':'00','aba':'01'}
 
-    def allstarBallotPredictor(self, west_players, east_players, game_id, start, end):
+    def all_star_ballot_predictor(self, west_players, east_players, game_id, start, end):
         url = self.base_url.format("allstarballotpredictor")
         params = {'WestPlayer1': west_players[0], 'WestPlayer2': west_players[1],
                   'WestPlayer3': west_players[2], 'WestPlayer4': west_players[3],
@@ -33,8 +33,7 @@ class NBA:
         req = requests.get(url,headers=self.headers)
         print(req.text)
 
-    def boxscoreadvancedv2(self, game_id, start_period, end_period, start_range, end_range, range_type):
-        #GameID is required; The StartPeriod property is required.; The EndPeriod property is required.; The StartRange property is required.; The EndRange property is required.; The RangeType property is required.
+    def boxscore_advanced(self, game_id, start_period, end_period, start_range, end_range, range_type):
 
         url = self.base_url.format("boxscoreadvancedv2")
         logging.info("Scoreboard URL: {0}".format(url))
@@ -52,10 +51,18 @@ class NBA:
         req = requests.get(url, headers=self.headers)
         print(req.text)
 
-    def boxscoremiscv2(self):
+    def boxscore_misc(self,game_id, start_period, end_period, start_range, end_range, range_type):
+        params = {
+            'GameID'        :   game_id,
+            'StartPeriod'   :   start_period,
+            'EndPeriod'     :   end_period,
+            'StartRange'    :   start_range,
+            'EndRange'      :   end_range,
+            'RangeType'     :   range_type
+        }
         url = self.base_url.format("boxscoremiscv2")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     def boxscore_player_track(self, game_id):
@@ -96,33 +103,67 @@ class NBA:
         data    = ResponseParser.boxscore_summary(resp)
         return data
 
-    def boxscoretraditionalv2(self):
+    def boxscore_traditional(self, game_id, start_period, end_period, start_range, end_range, range_type):
+        params = {
+            'GameID'        :   game_id,
+            'StartPeriod'   :   start_period,
+            'EndPeriod'     :   end_period,
+            'StartRange'    :   start_range,
+            'EndRange'      :   end_range,
+            'RangeType'     :   range_type
+        }
         url = self.base_url.format("boxscoretraditionalv2")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
-    def boxscoreusagev2(self):
+    def boxscore_usage(self, game_id, start_period, end_period, start_range, end_range, range_type):
+        params = {
+            'GameID': game_id,
+            'StartPeriod': start_period,
+            'EndPeriod': end_period,
+            'StartRange': start_range,
+            'EndRange': end_range,
+            'RangeType': range_type
+        }
         url = self.base_url.format("boxscoreusagev2")
         logging.debug("Scoreboard URL: {0}".format(url))
         req = requests.get(url, headers=self.headers)
+        print(req.text)
 
-    def commonTeamYears(self):
+    def common_team_years(self, league_id):
+        """
+        Retrieves a list of all starting/ending year for each team
+        Args:
+            league_id:
+
+        Returns:
+
+        """
+        params = {'LeagueID':league_id}
         url = self.base_url.format("commonTeamYears")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
-    def commonallplayers(self):
+    def common_all_players(self, league_id, season, is_only_current_season):
+        params = {
+            'LeagueID' : league_id ,
+            'Season' : season ,
+            'IsOnlyCurrentSeason' : is_only_current_season
+        }
         url = self.base_url.format("commonallplayers")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
-    def commonplayerinfo(self):
+    def common_player_info(self, player_id):
+        params = {
+            'PlayerID':player_id
+        }
         url = self.base_url.format("commonplayerinfo")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     def commonplayoffseries(self):
@@ -414,10 +455,23 @@ class NBA:
         req = requests.get(url, headers=self.headers)
         print(req.text)
 
-    def playoffpicture(self):
+    def playoff_picture(self, league_id, season_id):
+        """
+
+        Args:
+            league_id:
+            season_id:
+
+        Returns:
+
+        """
+        params  =   {
+            'LeagueID' : league_id ,
+            'SeasonID' : season_id
+        }
         url = self.base_url.format("playoffpicture")
         logging.debug("Scoreboard URL: {0}".format(url))
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     def scoreboard(self,game_date, leauge_id, day_offset):
@@ -436,9 +490,33 @@ class NBA:
 
         return data
 
-    def shotchartdetail(self):
+    def shot_chart_detail(self, season_type, team_id, player_id, game_id,outcome, location, month, season_segment,
+                          date_from, date_to, opponent_team_id, vs_conference, vs_division, player_position, rookie_year,
+                          game_segment, period, last_n_games, context_measure):
+        params  =   {
+            'SeasonType'        : season_type    ,
+            'TeamID'            : team_id    ,
+            'PlayerID'          : player_id  ,
+            'GameID'            : game_id ,
+            'Outcome'           : outcome           ,
+            'Location'          : location          ,
+            'Month'             : month             ,
+            'SeasonSegment'     : season_segment    ,
+            'DateFrom'          : date_from,
+            'DateTo'            : date_to   ,
+            'OpponentTeamID'    : opponent_team_id ,
+            'VsConference'      : vs_conference ,
+            'VsDivision'        : vs_division ,
+            'PlayerPosition'    : player_position ,
+            'RookieYear'        : rookie_year ,
+            'GameSegment'       : game_segment,
+            'Period'            : period ,
+            'LastNGames'        : last_n_games ,
+            'ContextMeasure'    : context_measure
+        }
+
         url = self.base_url.format("shotchartdetail")
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     def shotchartlineupdetail(self):
