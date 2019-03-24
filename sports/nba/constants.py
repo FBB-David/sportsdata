@@ -6,6 +6,10 @@ class GameSegment(Enum):
     SECOND_HALF             =   'Second Half'
     OVERTIME                =   'Overtime'
 
+class League(Enum):
+    NBA                     =   '00'
+    ABA                     =   '01'
+
 class Location(Enum):
     ANYWHERE                =   ''
     HOME                    =   'Home'
