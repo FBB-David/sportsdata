@@ -1,5 +1,7 @@
-from enum import Enum
+from .constants import *
+from enum       import Enum
 from inspect    import isclass
+
 import requests
 import requests_cache
 import logging
@@ -544,8 +546,10 @@ class NBA:
     @clean_inputs
     def player_dashboard_by_shooting_splits(self, measure_type, per_mode, plus_minus, pace_adjust,rank, season_type,
                                             player_id, outcome, location, month, season_segment, date_from,
-                                            date_to, opponent_team_id, vs_conference, vs_division, game_segment,
-                                            period, last_n_games):
+                                            date_to, opponent_team_id, vs_conference, period,
+                                            last_n_games,
+                                            vs_division=Division.ALL.value,
+                                            game_segment=GameSegment.FULL_GAME.value):
         params = {
             'MeasureType'   : measure_type      ,
             'PerMode'       : per_mode          ,
@@ -575,8 +579,9 @@ class NBA:
     @clean_inputs
     def player_dashboard_by_team_performance(self, measure_type, per_mode, plus_minus, pace_adjust,rank, season_type,
                                             player_id, outcome, location, month, season_segment, date_from,
-                                            date_to, opponent_team_id, vs_conference, vs_division, game_segment,
-                                            period, last_n_games):
+                                            date_to, opponent_team_id, vs_conference, period, last_n_games,
+                                             vs_division=Division.ALL.value,
+                                             game_segment=''):
         params = {
             'MeasureType'       : measure_type  ,
             'PerMode'           : per_mode      ,
@@ -713,27 +718,31 @@ class NBA:
 
     @clean_inputs
     def shot_chart_detail(self, season_type, team_id, player_id, game_id,outcome, location, month, season_segment,
-                          date_from, date_to, opponent_team_id, vs_conference, vs_division, player_position, rookie_year,
-                          game_segment, period, last_n_games, context_measure):
+                          date_from, date_to, opponent_team_id,
+                          player_position, rookie_year,
+                          period, last_n_games, context_measure,
+                          vs_conference=Conference.ALL.value,
+                          vs_division=Division.ALL.value,
+                          game_segment=GameSegment.FULL_GAME.value):
         params  =   {
-            'SeasonType'        : season_type    ,
-            'TeamID'            : team_id    ,
-            'PlayerID'          : player_id  ,
-            'GameID'            : game_id ,
+            'SeasonType'        : season_type       ,
+            'TeamID'            : team_id           ,
+            'PlayerID'          : player_id         ,
+            'GameID'            : game_id           ,
             'Outcome'           : outcome           ,
             'Location'          : location          ,
             'Month'             : month             ,
             'SeasonSegment'     : season_segment    ,
-            'DateFrom'          : date_from,
-            'DateTo'            : date_to   ,
-            'OpponentTeamID'    : opponent_team_id ,
-            'VsConference'      : vs_conference ,
-            'VsDivision'        : vs_division ,
-            'PlayerPosition'    : player_position ,
-            'RookieYear'        : rookie_year ,
-            'GameSegment'       : game_segment,
-            'Period'            : period ,
-            'LastNGames'        : last_n_games ,
+            'DateFrom'          : date_from         ,
+            'DateTo'            : date_to           ,
+            'OpponentTeamID'    : opponent_team_id  ,
+            'VsConference'      : vs_conference     ,
+            'VsDivision'        : vs_division       ,
+            'PlayerPosition'    : player_position   ,
+            'RookieYear'        : rookie_year       ,
+            'GameSegment'       : game_segment      ,
+            'Period'            : period            ,
+            'LastNGames'        : last_n_games      ,
             'ContextMeasure'    : context_measure
         }
 
@@ -838,8 +847,10 @@ class NBA:
 
     @clean_inputs
     def team_dash_pt_shots(self, per_mode, season, season_type, team_id, outcome, location, month, season_segment,
-                           date_from, date_to, opponent_team_id, vs_conference, vs_division, game_segment, period,
-                           last_n_games):
+                           date_from, date_to, opponent_team_id, period, last_n_games,
+                           vs_division=Division.ALL.value,
+                           vs_conference=Conference.ALL.value,
+                           game_segment=GameSegment.FULL_GAME.value):
         params = {
             'PerMode'           : per_mode,
             'Season'            : season,
@@ -900,14 +911,9 @@ class NBA:
     @clean_inputs
     def team_player_on_off_summary(self, team_id, measure_type, per_mode, plus_minus, pace_adjust, rank, season_type,
                                    outcome, location, month, season_segment, date_from , date_to, opponent_team_id,
-                                   vs_conference, vs_division, game_segment, period, last_n_games):
-        """
-
-        Returns:
-
-
-        """
-
+                                   vs_conference, period, last_n_games,
+                                   vs_division=Division.ALL.value,
+                                   game_segment=GameSegment.FULL_GAME.value):
         params  =   {
                     'TeamID'            : team_id           ,
                     'MeasureType'       : measure_type      ,
@@ -934,9 +940,13 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def team_vs_player(self):
+    def team_vs_player(self,team_id, vs_player_id):
+        params = {
+            'TeamID'            : team_id           ,
+            'VsPlayerID'        : vs_player_id      ,
+        }
         url = self.base_url.format("teamvsplayer")
-        req = requests.get(url, headers=self.headers)
+        req = requests.get(url, headers=self.headers, params=params)
         print(req.text)
 
     @clean_inputs
