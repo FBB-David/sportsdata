@@ -7,7 +7,7 @@ import requests_cache
 import logging
 import json
 
-from sports.source.nba.response_parser import ResponseParser
+from sports.nba.response_parser import ResponseParser
 requests_cache.install_cache('sports', expire_after=60*60*6) #Cache for 6 hours
 
 

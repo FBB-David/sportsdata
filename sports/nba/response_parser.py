@@ -1,7 +1,7 @@
 import json
 from pandas import DataFrame
-from sports.source.nba.scoreboard import Scoreboard
-from sports.source.nba.nba_boxscore import NBA_BoxScore
+from sports.nba.scoreboard import Scoreboard
+from sports.nba.nba_boxscore import NBA_BoxScore
 
 class ResponseParser(object):
     pass
