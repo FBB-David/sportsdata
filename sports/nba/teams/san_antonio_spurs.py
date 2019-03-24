@@ -1,5 +1,5 @@
 
-from sports.source.nba.nba_team import NBA_Team
+from sports.nba.nba_team import NBA_Team
 
 
 class SanAntonioSpurs(NBA_Team):
