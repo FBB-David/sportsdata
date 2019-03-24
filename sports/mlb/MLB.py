@@ -3,15 +3,15 @@ import requests
 import requests_cache
 import json
 import xml
-from sports.source.mlb.handlers.BenchXml import BenchXml
-from sports.source.mlb.handlers.InningsAllXml import InningsAllXml
-from sports.source.mlb.handlers.InningHit import InningHitXml
-from sports.source.mlb.handlers.InningScoresXml import InningScoresXml
-from sports.source.mlb.handlers.BoxscoreXml import BoxscoreXml
-from sports.source.mlb.handlers.ScoreboardXml import ScoreboardXml
-from sports.source.mlb.handlers.GameXml import GameXml
-from sports.source.mlb.handlers.GamedaySynXml import GamedaySynXml
-from sports.source.mlb.handlers.GameEventsXml import GameEventsXml
+from sports.mlb.handlers import BenchXml
+from sports.mlb.handlers import InningsAllXml
+from sports.mlb.handlers.InningHit import InningHitXml
+from sports.mlb.handlers.InningScoresXml import InningScoresXml
+from sports.mlb.handlers.BoxscoreXml import BoxscoreXml
+from sports.mlb.handlers.ScoreboardXml import ScoreboardXml
+from sports.mlb.handlers.GameXml import GameXml
+from sports.mlb.handlers.GamedaySynXml import GamedaySynXml
+from sports.mlb.handlers import GameEventsXml
 
 class MLB:
     domain_name = 'mlb.com'
