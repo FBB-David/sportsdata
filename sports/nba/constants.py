@@ -1,5 +1,20 @@
 from enum import Enum
 
+
+class Conference(Enum):
+    ALL                     = ''
+    EAST                    = 'East'
+    WEST                    = 'West'
+
+class Division(Enum):
+    ALL                     = ''
+    ATLANTIC                = 'Atlantic'
+    CENTRAL                 = 'Central'
+    NORTHWEST               = 'Northwest'
+    PACIFIC                 = 'Pacific'
+    SOUTHEAST               = 'Southeast'
+    SOUTHWEST               = 'Southwest'
+
 class GameSegment(Enum):
     FULL_GAME               =   ''
     FIRST_HALF              =   'First Half'
