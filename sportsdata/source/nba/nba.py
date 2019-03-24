@@ -23,7 +23,8 @@ def clean_inputs(func):
         #print(**kwargs)
         for key, val in kwargs.items():
             print(key)
-        func(*cleaned_args,*kwargs)
+        data = func(*cleaned_args,*kwargs)
+        return data
     return new_func
 
 
@@ -878,10 +879,11 @@ class NBA:
             'LeagueID'  : league_id ,
             'TeamID'    : team_id
         }
-        print(params)
-        url = self.base_url.format("teaminfocommon")
-        req = requests.get(url, headers=self.headers, params=params)
-        print(req.text)
+
+        url     = self.base_url.format("teaminfocommon")
+        req     = requests.get(url, headers=self.headers, params=params)
+        data    = ResponseParser.get_dataframes(req)
+        return data
 
     @clean_inputs
     def team_player_dashboard(self):
