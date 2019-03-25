@@ -26,11 +26,12 @@ class League(Enum):
     ABA                     =   '01'
 
 class Location(Enum):
-    ANYWHERE                =   ''
+    ALL                     =   ''
     HOME                    =   'Home'
     AWAY                    =   'Away'
 
 class Outcome(Enum):
+    ALL                     =   ''
     WIN                     =   'W'
     LOSS                    =   'L'
 
