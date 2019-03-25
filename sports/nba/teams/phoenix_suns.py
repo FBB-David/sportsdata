@@ -6,11 +6,11 @@ class PhoenixSuns(NBA_Team):
     NBA Golden State Warriors Static Information
 
     """
+    full_name = "Phoenix Suns"
+    name = "Suns"
+    team_id = 1610612756
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Phoenix Suns"
-        self.name       = "Suns"
-        self.team_id    = 1610612756

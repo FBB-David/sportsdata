@@ -6,11 +6,11 @@ class BrooklynNets(NBA_Team):
     NBA Golden State Warriors Static Information
 
     """
+    full_name   = "Brooklyn Nets"
+    name        = "Nets"
+    team_id     = 1610612751
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Brooklyn Nets"
-        self.name       = "Nets"
-        self.team_id    = 1610612751

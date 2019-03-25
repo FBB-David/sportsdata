@@ -6,11 +6,11 @@ class MilwaukeeBucks(NBA_Team):
     NBA Memphis Grizzlies Static Information
 
     """
+    full_name   = "Milwaukee Bucks"
+    name        = "Bucks"
+    team_id     = 1610612749
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Milwaukee Bucks"
-        self.name       = "Bucks"
-        self.team_id    = 1610612749

@@ -6,11 +6,12 @@ class OrlandoMagic(NBA_Team):
     NBA Orlando Magic Static Information
 
     """
+    full_name = "Orlando Magic"
+    name = "Magic"
+    team_id = 1610612753
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Orlando Magic"
-        self.name       = "Magic"
-        self.team_id    = 1610612753
+

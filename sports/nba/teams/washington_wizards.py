@@ -6,11 +6,11 @@ class WashingtonWizards(NBA_Team):
     NBA's Washington Wizards Static Information
 
     """
+    full_name = "Washington Wizards"
+    name = "Wizards"
+    team_id = 1610612764
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Washington Wizards"
-        self.name       = "Wizards"
-        self.team_id    = 1610612764

@@ -7,10 +7,11 @@ class UtahJazz(NBA_Team):
 
     """
 
+    full_name = "Utah Jazz"
+    name = "Jazz"
+    team_id = 1610612762
+
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Utah Jazz"
-        self.name       = "Jazz"
-        self.team_id    = 1610612762

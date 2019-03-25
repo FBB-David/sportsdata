@@ -6,11 +6,11 @@ class ChicagoBulls(NBA_Team):
     NBA Atlanta Hawks Static Information
 
     """
+    full_name = "Chicago Bulls"
+    name = "Bulls"
+    team_id = 1610612741
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Chicago Bulls"
-        self.name       = "Bulls"
-        self.team_id    = 1610612741

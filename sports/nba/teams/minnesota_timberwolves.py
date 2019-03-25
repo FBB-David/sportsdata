@@ -7,10 +7,12 @@ class MinnesotaTimberwolves(NBA_Team):
 
     """
 
+    full_name = "Minnesota Timberwolves"
+    name = "Timberwolves"
+    team_id = 1610612750
+
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Minnesota Timberwolves"
-        self.name       = "Timberwolves"
-        self.team_id    = 1610612750
+

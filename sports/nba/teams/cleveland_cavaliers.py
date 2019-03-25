@@ -6,11 +6,11 @@ class ClevelandCavaliers(NBA_Team):
     NBA Atlanta Hawks Static Information
 
     """
+    full_name = "Cleveland Cavaliers"
+    name = "Cavaliers"
+    team_id = 1610612739
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Cleveland Cavaliers"
-        self.name       = "Cavaliers"
-        self.team_id    = 1610612739

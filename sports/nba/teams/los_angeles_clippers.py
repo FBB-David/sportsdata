@@ -6,11 +6,11 @@ class LosAngelesClippers(NBA_Team):
     NBA Los Angeles Clippers Static Information
 
     """
-
+    full_name = "Los Angeles Clippers"
+    name = "Clippers"
+    team_id = 1610612746
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Los Angeles Clippers"
-        self.name       = "Clippers"
-        self.team_id    = 1610612746
+

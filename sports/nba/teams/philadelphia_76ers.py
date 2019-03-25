@@ -6,11 +6,11 @@ class Philadelphia76ers(NBA_Team):
     NBA's Philadelphia 76ers Static Information
 
     """
+    full_name = "Philadelphia 76ers"
+    name = "76ers"
+    team_id = 1610612755
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Philadelphia 76ers"
-        self.name       = "76ers"
-        self.team_id    = 1610612755

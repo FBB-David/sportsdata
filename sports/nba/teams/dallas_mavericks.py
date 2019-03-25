@@ -6,10 +6,11 @@ class DallasMavericks(NBA_Team):
     NBA Atlanta Hawks Static Information
 
     """
+    full_name = "Dallas Mavericks"
+    name = "Mavericks"
+    team_id = 1610612742
+
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  =   "Dallas Mavericks"
-        self.name       =   "Mavericks"
-        self.team_id    =   1610612742

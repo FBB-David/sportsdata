@@ -7,10 +7,11 @@ class NewYorkKnickerbockers(NBA_Team):
 
     """
 
+    full_name = "New York Knickerbockers"
+    name = "Knickerbockers"
+    team_id = 1610612752
+
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "New York Knickerbockers"
-        self.name       = "Knickerbockers"
-        self.team_id    = 1610612752

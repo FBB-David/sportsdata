@@ -6,11 +6,11 @@ class LosAngelesLakers(NBA_Team):
     NBA Golden State Warriors Static Information
 
     """
+    full_name = "Los Angeles Lakers"
+    name = "Lakers"
+    team_id = 1610612747
 
     def __init__(self):
         """
         """
         super().__init__()
-        self.full_name  = "Los Angeles Lakers"
-        self.name       = "Lakers"
-        self.team_id    = 1610612747
