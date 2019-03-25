@@ -6,9 +6,9 @@ class PortlandTrailBlazers(NBA_Team):
     NBA's Portland TrailBlazers Static Information
 
     """
-    self.full_name = "Portland TrailBlazers"
-    self.name = "TrailBlazers"
-    self.team_id = 1610612757
+    full_name = "Portland TrailBlazers"
+    name = "TrailBlazers"
+    team_id = 1610612757
 
     def __init__(self):
         """
