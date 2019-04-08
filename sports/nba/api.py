@@ -10,7 +10,9 @@ import json
 from sports.nba.response_parser import ResponseParser
 requests_cache.install_cache('sports', expire_after=60*60*6) #Cache for 6 hours
 
-
+################################
+# Decorators for the NBA Class #
+################################
 def clean_inputs(func):
     """
     Iterates over a function's parameters checking for Enum, if one is found, the value is used instead
@@ -171,12 +173,12 @@ class NBA:
     @clean_inputs
     def boxscore_usage(self, game_id, start_period, end_period, start_range, end_range, range_type):
         params = {
-            'GameID': game_id,
-            'StartPeriod': start_period,
-            'EndPeriod': end_period,
-            'StartRange': start_range,
-            'EndRange': end_range,
-            'RangeType': range_type
+            'GameID'        : game_id,
+            'StartPeriod'   : start_period,
+            'EndPeriod'     : end_period,
+            'StartRange'    : start_range,
+            'EndRange'      : end_range,
+            'RangeType'     : range_type
         }
         url = self.base_url.format("boxscoreusagev2")
         logging.debug("Scoreboard URL: {0}".format(url))
@@ -310,7 +312,13 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def homepage_leaders(self, stat_category, league_id, season, season_type, player_or_team, game_scope, player_scope):
+    def homepage_leaders(self,
+                         stat_category,
+                         league_id,
+                         season,
+                         player_or_team,
+                         game_scope, player_scope,
+                         season_type = SeasonType.REGULAR_SEASON.value):
         params = {
             'StatCategory'  : stat_category ,
             'LeagueID'      : league_id,
@@ -326,7 +334,14 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def homepage(self, stat_category, league_id, season, season_type, player_or_team, game_scope, player_scope):
+    def homepage(self,
+                 stat_category,
+                 league_id,
+                 season,
+                 player_or_team,
+                 game_scope,
+                 player_scope,
+        season_type = SeasonType.REGULAR_SEASON.value):
         params = {
             'StatCategory'  : stat_category     ,
             'LeagueID'      : league_id         ,
@@ -346,10 +361,10 @@ class NBA:
                      stat_category,
                      league_id,
                      season,
-                     season_type,
                      player_or_team,
                      game_scope,
-                     player_scope):
+                     player_scope,
+                      season_type=SeasonType.REGULAR_SEASON.value):
         params = {
             'StatCategory'  : stat_category     ,
             'LeagueID'      : league_id         ,
@@ -368,17 +383,17 @@ class NBA:
     @clean_inputs
     def league_dash_lineups(self,
                             group_quantity,
-                            season_type,
                             measure_type,
                             plus_minus,
-                            location,
-                            season_segment=SeasonSegment.FULL_SEASON.value,
-                            month=0,
-                            outcome=Outcome.ALL.value,
-                            rank='N',
-                            pace_adjust='N',
-                            per_mode=PerMode.GAME.value,
-                            date_from=''):
+                            location        = Location.ALL.value,
+                            season_type     = SeasonType.REGULAR_SEASON.value,
+                            season_segment  = SeasonSegment.FULL_SEASON.value,
+                            month           = 0,
+                            outcome         = Outcome.ALL.value,
+                            rank            = 'N',
+                            pace_adjust     = 'N',
+                            per_mode        = PerMode.GAME.value,
+                            date_from       = ''):
         params = {
             'GroupQuantity'     : group_quantity    ,
             'SeasonType'        : season_type       ,
@@ -399,6 +414,7 @@ class NBA:
         print(req.text)
 
     @clean_inputs
+    #TODO: Add Params
     def leaguedashplayerbiostats(self):
         url = self.base_url.format("leaguedashplayerbiostats")
         logging.debug("Scoreboard URL: {0}".format(url))
@@ -406,6 +422,7 @@ class NBA:
         print(req.text)
 
     @clean_inputs
+    #TODO: Add Params
     def leaguedashplayerclutch(self):
         url = self.base_url.format("leaguedashplayerclutch")
         logging.debug("Scoreboard URL: {0}".format(url))
@@ -469,7 +486,46 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def league_leaders(self, measure_type, plus_minus, season_type,
+    def league_game_log(self,
+                        season,
+                        direction=Direction.DESC.value,
+                        league_id=League.NBA.value,
+                        player_or_team=PlayerOrTeam.TEAM.value,
+                        season_type=SeasonType.REGULAR_SEASON.value,
+                        sorter=StatCategory.FIELD_GOALS_MADE.value):
+        """
+
+        Args:
+            season:
+            direction:
+            league_id:
+            player_or_team:
+            season_type:
+            sorter:
+
+        Returns:
+            'SEASON_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'TEAM_NAME', 'GAME_ID', GAME_DATE',
+            'MATCHUP', 'WL', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM',
+            'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'PLUS_MINUS', 'VIDEO_AVAILABLE'
+
+        """
+        url = self.base_url.format('leaguegamelog')
+        params = {
+            'LeagueID'      : league_id,
+            'Season'        : season,
+            'SeasonType'    : season_type,
+            'Direction'     : direction,
+            'PlayerOrTeam'  : player_or_team,
+            'Sorter'        : sorter
+        }
+        response = requests.get(url, headers=self.headers, params=params)
+        data = ResponseParser.get_data_frames(response)
+        return data
+
+    @clean_inputs
+    def league_leaders(self, measure_type,
+                       plus_minus='N',
+                       season_type=SeasonType.REGULAR_SEASON.value,
                        outcome=Outcome.ALL.value,
                        rank='N',
                        pace_adjust='N',
@@ -490,7 +546,11 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def play_by_play(self, game_id, start_period, end_period, returnResponse=False):
+    def play_by_play(self,
+                     game_id,
+                     start_period,
+                     end_period,
+                     returnResponse=False):
         """
         playbyplay endpoint
 
@@ -574,21 +634,21 @@ class NBA:
     @clean_inputs
     def player_dashboard_by_shooting_splits(self,
                                             measure_type,
-                                            plus_minus,
-                                            season_type,
                                             player_id,
-                                            location,
                                             date_to,
                                             opponent_team_id,
-                                            last_n_games,
-                                            season_segment=SeasonSegment.FULL_SEASON.value,
-                                            month=0,
-                                            outcome=Outcome.ALL.value,
-                                            period=Period.ALL_PERIODS.value,
-                                            date_from='',
-                                            pace_adjust='N',
-                                            rank='N',
-                                            per_mode=PerMode.GAME.value,
+                                            plus_minus      ='N',
+                                            location        =Location.ALL.value,
+                                            season_type     =SeasonType.REGULAR_SEASON.value,
+                                            last_n_games    =   0,
+                                            season_segment  =SeasonSegment.FULL_SEASON.value,
+                                            month           =0,
+                                            outcome         =Outcome.ALL.value,
+                                            period          =Period.ALL_PERIODS.value,
+                                            date_from       ='',
+                                            pace_adjust     ='N',
+                                            rank            ='N',
+                                            per_mode        =PerMode.GAME.value,
                                             vs_conference=Conference.ALL.value,
                                             vs_division=Division.ALL.value,
                                             game_segment=GameSegment.FULL_GAME.value):
@@ -619,9 +679,15 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def player_dashboard_by_team_performance(self, measure_type, plus_minus, season_type,
-                                            player_id, location,
-                                            opponent_team_id, period, last_n_games,
+    def player_dashboard_by_team_performance(self,
+                                             measure_type,
+                                             player_id,
+                                             opponent_team_id,
+                                             period,
+                                             plus_minus='N',
+                                             location=Location.ALL.value,
+                                             season_type=SeasonType.REGULAR_SEASON.value,
+                                             last_n_games=0,
                                              season_segment=SeasonSegment.FULL_SEASON.value,
                                              month=0,
                                              outcome=Outcome.ALL.value,
@@ -769,17 +835,17 @@ class NBA:
 
     @clean_inputs
     def shot_chart_detail(self,
-                          season_type,
                           team_id,
                           player_id,
                           game_id,
-                          location,
                           opponent_team_id,
                           player_position,
                           rookie_year,
-                          last_n_games,
                           context_measure,
-                          period=Period.ALL_PERIODS.value,
+                          location=Location.ALL.value,
+                          season_type       = SeasonType.REGULAR_SEASON.value,
+                          period            = Period.ALL_PERIODS.value,
+                          last_n_games      = 0,
                           season_segment    = SeasonSegment.FULL_SEASON.value,
                           date_from         = '',
                           date_to           = '',
@@ -818,9 +884,9 @@ class NBA:
     def shot_chart_lineup_detail(self,
                                  league_id,
                                  season,
-                                 season_type,
                                  team_id,
-                                 location,
+                                 location=Location.ALL.value,
+                                 season_type=SeasonType.REGULAR_SEASON.value,
                                  season_segment=SeasonSegment.FULL_SEASON.value,
                                  month=0,
                                  outcome=Outcome.ALL.value):
@@ -884,8 +950,8 @@ class NBA:
     @clean_inputs
     def team_dashboard_by_year_over_year(self,
                                          team_id,
-                                         season_type,
-                                         location,
+                                         location=Location.ALL.value,
+                                         season_type    = SeasonType.REGULAR_SEASON.value   ,
                                          season_segment = SeasonSegment.FULL_SEASON.value   ,
                                          month          = 0                                 ,
                                          outcome        = Outcome.ALL.value                 ,
@@ -929,17 +995,17 @@ class NBA:
     def team_dash_pt_shots(self,
                            per_mode,
                            season,
-                           season_type,
                            team_id,
-                           location,
                            opponent_team_id,
-                           last_n_games,
-                           period=Period.ALL_PERIODS.value,
-                           season_segment=SeasonSegment.FULL_SEASON.value,
-                           month=0,
-                           outcome=Outcome.ALL.value,
-                           date_from='',
-                           date_to='',
+                           location=Location.ALL.value,
+                           season_type      =SeasonType.REGULAR_SEASON.value,
+                           last_n_games     =0,
+                           period           =Period.ALL_PERIODS.value,
+                           season_segment   =SeasonSegment.FULL_SEASON.value,
+                           month            =0,
+                           outcome          =Outcome.ALL.value,
+                           date_from        ='',
+                           date_to          ='',
                            vs_division=Division.ALL.value,
                            vs_conference=Conference.ALL.value,
                            game_segment=GameSegment.FULL_GAME.value):
@@ -966,7 +1032,10 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def team_game_log(self, team_id, season, season_type):
+    def team_game_log(self,
+                      team_id,
+                      season,
+                      season_type=SeasonType.REGULAR_SEASON.value):
         params = {
             'TeamID'        : team_id       ,
             'Season'        : season        ,
@@ -977,7 +1046,10 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def team_info_common(self, league_id, team_id):
+    #TODO: Add Docstring
+    def team_info_common(self,
+                         league_id,
+                         team_id):
         params = {
             'LeagueID'  : league_id ,
             'TeamID'    : team_id
@@ -1007,26 +1079,28 @@ class NBA:
         print(req.text)
 
     @clean_inputs
+    #todo: add doc string
     def team_player_on_off_summary(self,
-                                   team_id,
-                                   plus_minus,
-                                   season_type,
-                                   location,
-                                   period,
-                                   last_n_games,
-                                   measure_type=MeasureType.BASE.value,
-                                   opponent_team_id=0,
-                                   vs_conference=Conference.ALL.value,
-                                   season_segment=SeasonSegment.FULL_SEASON.value,
-                                   month=0,
-                                   outcome=Outcome.ALL.value,
-                                   rank='N',
-                                   pace_adjust='N',
-                                   date_from='',
-                                   date_to='',
-                                   per_mode=PerMode.GAME.value,
-                                   vs_division=Division.ALL.value,
-                                   game_segment=GameSegment.FULL_GAME.value):
+                                   team_id                                              ,
+                                   season                                               ,
+                                   plus_minus       = 'N'                               ,
+                                   location         = Location.ALL.value                ,
+                                   season_type      = SeasonType.REGULAR_SEASON.value   ,
+                                   period           = Period.ALL_PERIODS.value          ,
+                                   last_n_games     = 0                                 ,
+                                   measure_type     = MeasureType.BASE.value            ,
+                                   opponent_team_id = 0                                 ,
+                                   vs_conference    = Conference.ALL.value              ,
+                                   season_segment   = SeasonSegment.FULL_SEASON.value   ,
+                                   month            = 0                                 ,
+                                   outcome          = Outcome.ALL.value                 ,
+                                   rank             = 'N'                               ,
+                                   pace_adjust      = 'N'                               ,
+                                   date_from        = ''                                ,
+                                   date_to          = ''                                ,
+                                   per_mode         = PerMode.TOTALS.value              ,
+                                   vs_division      = Division.ALL.value                ,
+                                   game_segment     = GameSegment.FULL_GAME.value):
         params  =   {
                     'TeamID'            : team_id           ,
                     'MeasureType'       : measure_type      ,
@@ -1039,6 +1113,7 @@ class NBA:
                     'Location'          : location          ,
                     'Month'             : month             ,
                     'SeasonSegment'     : season_segment    ,
+                    'Season'            : season            ,
                     'DateFrom'          : date_from         ,
                     'DateTo'            : date_to           ,
                     'OpponentTeamID'    : opponent_team_id  ,
@@ -1048,9 +1123,10 @@ class NBA:
                     'Period'            : period            ,
                     'LastNGames'        : last_n_games
         }
-        url = self.base_url.format("teamplayeronoffsummary")
-        req = requests.get(url, headers=self.headers, params=params)
-        print(req.text)
+        url     = self.base_url.format("teamplayeronoffsummary")
+        r       = requests.get(url, headers=self.headers, params=params)
+        data    = ResponseParser.get_data_frames(r)
+        return data
 
     @clean_inputs
     def team_roster(self, team_id, season):
@@ -1125,7 +1201,9 @@ class NBA:
         print(req.text)
 
     @clean_inputs
-    def team_year_by_years(self, league_id, season_type, team_id,
+    def team_year_by_years(self, league_id,
+                           team_id,
+                           season_type=SeasonType.REGULAR_SEASON.value,
                            per_mode=PerMode.GAME.value,):
         params  =   {'LeagueID'     :   league_id,
                      'SeasonType'   :   season_type,
@@ -1156,6 +1234,9 @@ class NBA:
     #####################
     # Logical Endpoints #
     #####################
+    def games(self):
+        self.league_game_log()
+
     def players(self, season, is_only_current_season=0, league_id=League.NBA.value):
         """
         Retrieves all available player centric information by season / league / is_only_current_season
