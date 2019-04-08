@@ -15,6 +15,10 @@ class Division(Enum):
     SOUTHEAST               = 'Southeast'
     SOUTHWEST               = 'Southwest'
 
+class Direction(Enum):
+    DESC                    = 'DESC'
+    ASC                     = 'ASC'
+
 class GameSegment(Enum):
     FULL_GAME               =   ''
     FIRST_HALF              =   'First Half'
@@ -34,6 +38,10 @@ class Outcome(Enum):
     ALL                     =   ''
     WIN                     =   'W'
     LOSS                    =   'L'
+
+class PlayerOrTeam(Enum):
+    PLAYER                  =   'P'
+    TEAM                    =   'T'
 
 class SeasonSegment(Enum):
     FULL_SEASON             =   ''
