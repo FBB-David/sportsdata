@@ -5,7 +5,7 @@ from .chicago_bulls             import ChicagoBulls
 from .cleveland_cavaliers       import ClevelandCavaliers
 from .denver_nuggets            import DenverNuggets
 from .detroit_pistons           import DetroitPistons
-from .golden_state_warrirors    import GoldenStateWarriors
+from .golden_state_warriors    import GoldenStateWarriors
 from .houston_rockets           import HoustonRockets
 from .indiana_pacers            import IndianaPacers
 from .los_angeles_clippers      import LosAngelesClippers
