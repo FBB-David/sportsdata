@@ -1,4 +1,4 @@
-# sportsdata
+# sports
 
 API interfaces for various public sports data. Currently focused on MLB and 
 NBA data with hopes to expand to other known data sources. 
@@ -79,6 +79,19 @@ See also the list of [contributors](https://github.com/your/project/contributors
 This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
+These are the various sources referenced while building this library
+
+
+
+| URL        | Comment           |
+| ------------- |:-------------:|
+| https://github.com/bradleyfay/py-Goldsberry | NBA Api Reference.  |
+| col 2 is      | centered      |
+
+
+
+
+
 
 * Thanks for the README.md template from  **Billie Thompson** [PurpleBooth](https://github.com/PurpleBooth)!
 
