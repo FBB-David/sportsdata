@@ -6,6 +6,12 @@ from sports.nba.nba_boxscore import NBA_BoxScore
 class ResponseParser(object):
     pass
 
+    column_name_mappings = {
+        'REMAINING_G'       : 'games_remaining'         ,
+        'REMAINING_HOME_G'  : 'home_games_remaining'    ,
+        'REMAINING_AWAY_G'  : 'away_games_remaining'    ,
+    }
+
     @staticmethod
     def _get_row_set(rs):
         data = []
@@ -16,12 +22,32 @@ class ResponseParser(object):
 
 
     @staticmethod
-    def get_dataframes(response, rename_to={}):
+    def get_data_frames(response, rename_to={}):
+        """
+        Parse the response for any results and load them into data frames
+        Args:
+            response:
+            rename_to:
+
+        Returns:
+            All Result Sets Found as Data Frames
+
+        """
         frames = {}
         info = json.loads(response.text)
         result_sets = info['resultSets']
         for rs in result_sets:
-            frames[rs['name']] = DataFrame(rs['rowSet'], columns=rs['headers'])
+            rs_name = rs['name']
+            if rs_name in rename_to.keys():
+                rs_name = rename_to[rs_name]
+
+            frames[rs_name] = DataFrame(rs['rowSet'], columns=rs['headers'])
+
+        # Check if there is only one result, if so no need for a dictionary
+        if len(frames) == 1:
+            key = next(iter(frames))
+            frames = frames[key]
+
         return frames
 
     ###################################
