@@ -1,17 +1,12 @@
-# sports
+# sportsdata
 
-API interfaces for various public sports data. Currently focused on MLB and 
-NBA data with hopes to expand to other known data sources. 
+Collection of sports data objects, APIs, Website (data), and factual data for each sport such as teams, rosters, etc. 
+Currently this library includes:
+* API for NBA
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
+### Installing sportsdata
+sportsdata can be installed via pip. 
+```bash
 pip install sportsdata
 ```
 
