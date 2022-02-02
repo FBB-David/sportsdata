@@ -1,7 +1,8 @@
 import json
 from pandas import DataFrame
-from sports.nba.scoreboard import Scoreboard
-from sports.nba.nba_boxscore import NBA_BoxScore
+from ..nba.scoreboard import Scoreboard
+from ..nba.boxscore import NbaBoxScore
+
 
 class ResponseParser(object):
     pass
@@ -113,7 +114,6 @@ class ResponseParser(object):
         scoreboard  = Scoreboard()
         info        = json.loads(response.text)
         processed_games = []
-
 
         for rs in info['resultSets']:
             if rs['name'] == 'LineScore':
