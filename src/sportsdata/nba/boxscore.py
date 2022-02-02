@@ -1,4 +1,4 @@
-class NBA_BoxScore(object):
+class NbaBoxScore(object):
     def _set_attributes(self, attributes):
         for key, value in attributes.items():
             setattr(self, key, value)

@@ -1,6 +1,6 @@
 from    glob  import glob
 import  os
-class NBA_Season(object):
+class NbaSeason(object):
     @staticmethod
     def my_import(name, classname):
         components = name.split('.')
