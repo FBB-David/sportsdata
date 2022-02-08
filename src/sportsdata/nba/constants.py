@@ -100,6 +100,27 @@ class SeasonType(Enum):
     PLAYOFFS = "Playoffs"
 
 
+class SortOrder(Enum):
+    FGM = 'FGM'
+    FGA = 'FGA'
+    FG_PCT = 'FG_PCT'
+    FG3M = 'FG3M'
+    FG3A = 'FG3A'
+    FG3_PCT = 'FG3_PCT'
+    FTM = 'FTM'
+    FTA = 'FTA'
+    FT_PCT = 'FT_PCT'
+    OREB = 'OREB'
+    DREB = 'DREB'
+    AST = 'AST'
+    STL = 'STL'
+    BLK = 'BLK'
+    TOV = 'TOV'
+    REB = 'REB'
+    PTS = 'PTS'
+    DATE = 'DATE'
+
+
 class StatCategory(Enum):
     POINTS = 'PTS'
     FIELD_GOALS_MADE = 'FGM'
