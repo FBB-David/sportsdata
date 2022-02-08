@@ -1,6 +1,8 @@
-from    glob  import glob
-import  os
-class NbaSeason(object):
+from glob import glob
+import os
+
+
+class NbaSeason:
     @staticmethod
     def my_import(name, classname):
         components = name.split('.')
@@ -20,12 +22,12 @@ class NbaSeason(object):
         class_dir += '/seasons/season_*.py'
 
         for file in glob(class_dir):
-            filename            = os.path.splitext(os.path.basename(file))[0]
-            name, date          = filename.split('_')
+            filename = os.path.splitext(os.path.basename(file))[0]
+            name, date = filename.split('_')
 
-            season_file         = 'sports.source.nba.seasons.{0}'.format(filename)
-            my_classname        = "NBA_Season_{0}".format(date)
-            my_class            = self.my_import(season_file, my_classname)
+            season_file = 'sports.source.nba.seasons.{0}'.format(filename)
+            my_classname = "NBA_Season_{0}".format(date)
+            my_class = self.my_import(season_file, my_classname)
             self.seasons[date]  = my_class()
 
     def get(self, season:int):
