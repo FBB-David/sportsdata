@@ -13,8 +13,7 @@ import requests
 import requests_cache
 import logging
 import json
-
-from .response_parser import ResponseParser
+from pandas import DataFrame
 
 requests_cache.install_cache('sports', expire_after=60 * 60 * 6)  # Cache for 6 hours
 
@@ -73,6 +72,47 @@ class StatsNbaApi:
         for endpoint in self.specs['stats_endpoints']:
             self.add_api_method(endpoint)
 
+    @staticmethod
+    def _get_row_set(rs):
+        data = []
+        for row in rs['rowSet']:
+            data_point = dict(zip([h.lower() for h in rs['headers']], row))
+            data.append(data_point)
+        return data
+
+    @staticmethod
+    def _get_data_frames(response, rename_to={}):
+        """
+        Parse the response for any results and load them into data frames
+        Args:
+            response:
+            rename_to:
+
+        Returns:
+            All Result Sets Found as Data Frames
+
+        """
+        frames = {}
+        info = json.loads(response.text)
+        result_sets = info['resultSets']
+        for rs in result_sets:
+            rs_name = rs['name']
+            if rs_name in rename_to.keys():
+                rs_name = rename_to[rs_name]
+
+            frames[rs_name] = DataFrame(rs['rowSet'], columns=rs['headers'])
+
+        # Check if there is only one result, if so no need for a dictionary
+        if len(frames) == 1:
+            key = next(iter(frames))
+            frames = frames[key]
+
+        return frames
+
+    @staticmethod
+    def _get_dictionary(response):
+        return json.loads(response.text)
+
     def add_api_method(self, endpoint):
         """
         Dynamically builds a method for each endpoint in the specification file
@@ -82,16 +122,16 @@ class StatsNbaApi:
         :return:
         """
 
-        def dynamic_method(self2, **kwargs):
+        def dynamic_method(self2: StatsNbaApi, **kwargs):
             url = endpoint['url']
             parameters = endpoint['parameters']
             self2.logger.info(url)
-            self.logger.info(kwargs)
+            self2.logger.info(kwargs)
 
             # Determine the ResponseType
             return_type = ReturnType.DICTIONARY.value
             if 'ReturnType' in kwargs:
-                return_type = kwargs['ResponseType']
+                return_type = kwargs['ReturnType']
 
             url_parameters = {}
             # Add each parameter to the url
@@ -114,93 +154,17 @@ class StatsNbaApi:
                 # Add the parameter and its value to the dictionary of url parameters
                 url_parameters[param] = value
 
-            self.logger.info(url_parameters)
+            self2.logger.info(url_parameters)
             response = requests.get(url, params=url_parameters, timeout=10)
 
-            if return_type == ReturnType.DICTIONARY.value:
-                return_value = ResponseParser.get_dictionary(response)
-            elif return_type == ReturnType.RESPONSE.value:
+            if return_type == ReturnType.DICTIONARY or return_type == ReturnType.DICTIONARY.value:
+                return_value = self2._get_dictionary(response)
+            elif return_type == ReturnType.RESPONSE or return_type == ReturnType.RESPONSE.value:
                 return_value = response
-            elif return_type == ReturnType.DATA_FRAMES.value:
-                return_value = ResponseParser.get_data_frames(response)
+            elif return_type == ReturnType.DATA_FRAMES or return_type == ReturnType.DATA_FRAMES.value:
+                return_value = self2._get_data_frames(response)
 
             return return_value
 
         dynamic_method.__name__ = endpoint['name']
         setattr(self, dynamic_method.__name__, types.MethodType(dynamic_method, self))
-
-    base_url = "https://stats.nba.com/stats/{0}"
-    headers = {
-        'user-agent': (
-            'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'),
-        'Dnt': '1',
-        'Accept-Encoding': 'gzip, deflate, sdch',
-        'Accept-Language': 'en',
-        'origin': 'https://stats.nba.com'
-    }
-
-    # @clean_inputs
-    # def league_game_log(self,
-    #                     counter=0,
-    #                     direction=Direction.DESC.value,
-    #                     league_id=League.NBA.value,
-    #                     player_or_team_abbreviation=PlayerOrTeam.TEAM.value,
-    #                     season=2021,
-    #                     season_type_all_star=SeasonType.REGULAR_SEASON.value,
-    #                     sorter=SortOrder.DATE.value,
-    #                     date_from_nullable='',
-    #                     date_to_nullable='',
-    #                     proxy=None,
-    #                     headers=None,
-    #                     timeout=30,
-    #                     ):
-    #     """
-    #
-    #     :param counter:
-    #     :param direction:
-    #     :param league_id:
-    #     :param player_or_team_abbreviation:
-    #     :param season:
-    #     :param season_type_all_star:
-    #     :param sorter:
-    #     :param date_from_nullable:
-    #     :param date_to_nullable:
-    #     :param proxy:
-    #     :param headers:
-    #     :param timeout:
-    #     :return:
-    #                 'SEASON_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'TEAM_NAME', 'GAME_ID', GAME_DATE',
-    #         'MATCHUP', 'WL', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM',
-    #         'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'PLUS_MINUS', 'VIDEO_AVAILABLE'
-    #     """
-    #     url = self.base_url.format('leaguegamelog')
-    #     self.logger.info(url)
-    #
-    #     parameters = {
-    #         'Counter': counter,
-    #         'Direction': direction,
-    #         'LeagueID': league_id,
-    #         'PlayerOrTeam': player_or_team_abbreviation,
-    #         'Season': season,
-    #         'SeasonType': season_type_all_star,
-    #         'Sorter': sorter,
-    #         'DateFrom': date_from_nullable,
-    #         'DateTo': date_to_nullable
-    #     }
-    #
-    #     self.logger.info(parameters)
-    #     # response = requests.get(url, headers=self.headers, params=params, timeout=10)
-    #
-    #     response = requests.get('https://stats.nba.com/stats/leaguegamelog?Counter=0&DateFrom=&DateTo=&Direction=ASC&LeagueID=00&PlayerOrTeam=T&Season=2021&SeasonType=Regular+Season&Sorter=DATE')
-    #     data = ResponseParser.get_data_frames(response)
-    #     return data
-
-
-    # @clean_inputs
-    # def scoreboard_v2(self, game_date, league_id, day_offset):
-    #     url = self.base_url.format("scoreboardv2")
-    #     params = {'GameDate': game_date, 'LeagueID': league_id, 'DayOffset': day_offset}
-    #     req = requests.get(url, headers=self.headers, params=params)
-    #     data = ResponseParser.scoreboard_v2(req)
-    #
-    #     return data
