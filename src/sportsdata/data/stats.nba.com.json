@@ -791,7 +791,8 @@
         "2017-18",
         "2018-19",
         "2019-20",
-        "2020-21"
+        "2020-21",
+        "2021-22"
       ]
     },
     {
@@ -1310,10 +1311,12 @@
     },
     {
       "name": "PlayerOrTeam",
-      "default": "Player",
+      "default": "T",
       "values": [
         "Player",
-        "Team"
+        "Team",
+        "P",
+        "T"
       ]
     },
     {
@@ -1482,15 +1485,18 @@
     },
     {
       "name": "Counter",
-      "default": "1000",
+      "default": "0",
       "values": [
+        "0",
         "1000"
       ]
     },
     {
       "name": "Sorter",
-      "default": "PTS",
+      "default": "DATE",
       "values": [
+        "AST",
+        "DATE",
         "PTS",
         "FGM",
         "FGA",
@@ -1503,7 +1509,6 @@
         "FT_PCT",
         "OREB",
         "DREB",
-        "AST",
         "STL",
         "BLK",
         "TOV",
@@ -1512,7 +1517,7 @@
     },
     {
       "name": "Direction",
-      "default": "DESC",
+      "default": "ASC",
       "values": [
         "DESC",
         "ASC"
