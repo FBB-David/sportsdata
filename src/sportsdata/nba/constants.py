@@ -93,6 +93,12 @@ class PerMode(Enum):
     PER_100_PLAYS = 'Per100Plays'
 
 
+class ReturnType(Enum):
+    DATA_FRAMES = "Data Frames"
+    DICTIONARY = "Dictionary"
+    RESPONSE = "Response"
+
+
 class SeasonType(Enum):
     ALL_STAR = "All-Star"
     REGULAR_SEASON = "Regular Season"
