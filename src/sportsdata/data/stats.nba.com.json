@@ -15,6 +15,46 @@
   },
   "stats_endpoints": [
     {
+      "name": "box_score",
+      "url": "https://stats.nba.com/stats/boxscoretraditionalv2",
+      "parameters": [
+        "GameID",
+        "Season",
+        "SeasonType",
+        "RangeType",
+        "StartPeriod",
+        "EndPeriod",
+        "StartRange",
+        "EndRange"
+      ]
+    },
+    {
+      "name": "box_score_advanced",
+      "url": "https://stats.nba.com/stats/boxscoreadvancedv2",
+      "parameters": [
+                "GameID",
+                "EndPeriod",
+                "EndRange",
+                "RangeType",
+                "StartPeriod",
+                "StartRange"
+      ]
+    },
+    {
+      "name": "box_score_summary",
+      "url": "https://stats.nba.com/stats/boxscoresummaryv2",
+      "parameters": [
+        "GameID",
+        "Season",
+        "SeasonType",
+        "RangeType",
+        "StartPeriod",
+        "EndPeriod",
+        "StartRange",
+        "EndRange"
+      ]
+    },
+    {
       "name": "player_profile",
       "url": "https://stats.nba.com/stats/playerprofilev2",
       "parameters": [
@@ -178,34 +218,6 @@
         "LeagueID",
         "DayOffset",
         "gameDate"
-      ]
-    },
-    {
-      "name": "box_score_summary",
-      "url": "https://stats.nba.com/stats/boxscoresummaryv2",
-      "parameters": [
-        "GameID",
-        "Season",
-        "SeasonType",
-        "RangeType",
-        "StartPeriod",
-        "EndPeriod",
-        "StartRange",
-        "EndRange"
-      ]
-    },
-    {
-      "name": "box_score",
-      "url": "https://stats.nba.com/stats/boxscoretraditionalv2",
-      "parameters": [
-        "GameID",
-        "Season",
-        "SeasonType",
-        "RangeType",
-        "StartPeriod",
-        "EndPeriod",
-        "StartRange",
-        "EndRange"
       ]
     },
     {
