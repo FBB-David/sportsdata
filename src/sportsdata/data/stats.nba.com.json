@@ -15,7 +15,28 @@
   },
   "stats_endpoints": [
     {
-      "name": "box_score",
+      "name": "all_time_leaders_grids",
+      "url": "https://stats.nba.com/stats/alltimeleadersgrids",
+      "parameters": [
+        "LeagueID"    ,
+        "PerMode"     ,
+        "SeasonType"  ,
+        "TopX"
+      ]
+    },
+    {
+      "name": "assist_leaders",
+      "url": "https://stats.nba.com/stats/assistleaders",
+      "parameters": [
+        "LeagueID"    ,
+        "PerMode"    ,
+        "PlayerOrTeam"    ,
+        "Season"    ,
+        "SeasonType"
+      ]
+    },
+    {
+      "name": "boxscore_traditional_v2",
       "url": "https://stats.nba.com/stats/boxscoretraditionalv2",
       "parameters": [
         "GameID",
@@ -29,8 +50,48 @@
       ]
     },
     {
-      "name": "box_score_advanced",
+      "name": "boxscore_advanced_v2",
       "url": "https://stats.nba.com/stats/boxscoreadvancedv2",
+      "parameters": [
+        "GameID",
+        "EndPeriod",
+        "EndRange",
+        "RangeType",
+        "StartPeriod",
+        "StartRange"
+      ]
+    },
+    {
+      "name": "boxscore_defensive",
+      "url": "https://stats.nba.com/stats/boxscoredefensive",
+      "parameters": [
+        "GameID"
+      ]
+    },
+    {
+      "name": "boxscore_misc_v2",
+      "url": "https://stats.nba.com/stats/boxscoremiscv2",
+      "parameters": [
+        "GameID",
+        "Season",
+        "SeasonType",
+        "RangeType",
+        "StartPeriod",
+        "EndPeriod",
+        "StartRange",
+        "EndRange"
+      ]
+    },
+    {
+      "name": "boxscore_player_track_v2",
+      "url": "https://stats.nba.com/stats/boxscoreplayertrackv2",
+      "parameters": [
+                "GameID"
+      ]
+    },
+    {
+      "name": "boxscore_scoring_v2",
+      "url": "https://stats.nba.com/stats/boxscorescoringv2",
       "parameters": [
                 "GameID",
                 "EndPeriod",
@@ -40,8 +101,22 @@
                 "StartRange"
       ]
     },
+        {
+      "name": "boxscore_similarity_score",
+      "url": "https://stats.nba.com/stats/boxscoresimilarityscore",
+      "parameters": [
+        "Person1Id",
+        "Person1LeagueId",
+        "Person1Season",
+        "Person1SeasonType",
+        "Person2Id",
+        "Person2LeagueId",
+        "Person2Season",
+        "Person2SeasonType"
+      ]
+    },
     {
-      "name": "box_score_summary",
+      "name": "boxscore_summary",
       "url": "https://stats.nba.com/stats/boxscoresummaryv2",
       "parameters": [
         "GameID",
@@ -52,6 +127,61 @@
         "EndPeriod",
         "StartRange",
         "EndRange"
+      ]
+    },
+    {
+      "name": "boxscore_usage_v2",
+      "url": "https://stats.nba.com/stats/boxscoreusagev2",
+      "parameters": [
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "EndPeriod",
+        "StartRange",
+        "EndRange"
+      ]
+    },
+    {
+      "name": "draftboard",
+      "url": "https://stats.nba.com/stats/draftboard",
+      "parameters": [
+        "LeagueID",
+        "Season",
+        "College",
+        "OverallPick",
+        "RoundNum",
+        "RoundPick",
+        "TeamID",
+        "TopX"
+      ]
+    },
+    {
+      "name": "draft_history",
+      "url": "https://stats.nba.com/stats/drafthistory",
+      "parameters": [
+        "LeagueID",
+        "Season",
+        "College",
+        "OverallPick",
+        "RoundNum",
+        "RoundPick",
+        "TeamID",
+        "TopX"
+      ]
+    },
+    {
+      "name": "game_rotation",
+      "url": "https://stats.nba.com/stats/gamerotation",
+      "parameters": [
+        "GameID",
+        "LeagueID"
+      ]
+    },
+    {
+      "name": "hustle_stats_boxscore",
+      "url": "https://stats.nba.com/stats/hustlestatsboxscore",
+      "parameters": [
+        "GameID"
       ]
     },
     {
@@ -73,7 +203,7 @@
       ]
     },
     {
-      "name": "players_info",
+      "name": "common_all_players",
       "url": "https://stats.nba.com/stats/commonallplayers",
       "parameters": [
         "LeagueID",
@@ -223,6 +353,15 @@
     {
       "name": "play_by_play",
       "url": "https://stats.nba.com/stats/playbyplay",
+      "parameters": [
+        "GameID",
+        "StartPeriod",
+        "EndPeriod"
+      ]
+    },
+    {
+      "name": "play_by_play_v2",
+      "url": "https://stats.nba.com/stats/playbyplayv2",
       "parameters": [
         "GameID",
         "StartPeriod",
@@ -613,6 +752,16 @@
       ]
     },
     {
+      "name": "league_standings_v3",
+      "url": "https://stats.nba.com/stats/leaguestandingsv3",
+      "parameters": [
+        "LeagueID",
+        "Season",
+        "SeasonType",
+        "SeasonYear"
+      ]
+    },
+    {
       "name": "player_hustle_leaders",
       "url": "https://stats.nba.com/stats/leaguehustlestatsplayerleaders",
       "parameters": [
@@ -771,6 +920,104 @@
         "GameSegment",
         "Period",
         "LastNGames"
+      ]
+    },
+  {
+      "name": "player_next_n_games",
+      "url": "https://stats.nba.com/stats/playernextngames",
+      "parameters": [
+        "PlayerID",
+        "NumberOfGames",
+        "Season",
+        "SeasonType",
+        "LeagueID"
+      ]
+    },
+    {
+      "name": "team_dash_lineups",
+      "url": "https://stats.nba.com/stats/teamdashlineups",
+      "parameters": [
+        "TeamID",
+        "GroupQuantity",
+        "LastNGames",
+        "MeasureType",
+        "Month",
+        "OpponentTeamID",
+        "PaceAdjust",
+        "PerMode",
+        "Period",
+        "PlusMinus",
+        "Rank",
+        "Season",
+        "SeasonType",
+        "DateFrom",
+        "DateTo",
+        "GameID",
+        "GameSegment",
+        "LeagueID",
+        "Location",
+        "Outcome",
+        "PORound",
+        "SeasonSegment",
+        "ShotClockRange",
+        "VsConference",
+        "VsDivision"
+      ]
+    },
+    {
+      "name": "team_game_log",
+      "url": "https://stats.nba.com/stats/teamgamelog",
+      "parameters": [
+        "TeamID",
+        "Season",
+        "SeasonType",
+        "DateFrom",
+        "DateTo",
+        "LeagueID"
+      ]
+    },
+    {
+      "name": "team_vs_player",
+      "url": "https://stats.nba.com/stats/teamvsplayer",
+      "parameters": [
+        "VsPlayerID",
+        "LastNGames",
+        "MeasureType",
+        "Month",
+        "OpponentTeamID",
+        "PaceAdjust",
+        "PerMode",
+        "Period",
+        "PlusMinus",
+        "Rank",
+        "Season",
+        "SeasonType",
+        "DateFrom",
+        "DateTo",
+        "GameSegment",
+        "LeagueID",
+        "Location",
+        "Outcome",
+        "PlayerID",
+        "SeasonSegment",
+        "VsConference",
+        "VsDivision"
+      ]
+    },
+    {
+      "name": "video_status",
+      "url": "https://stats.nba.com/stats/videostatus",
+      "parameters": [
+        "GameDate",
+        "LeagueID"
+      ]
+    },
+    {
+      "name": "win_probability_pbp",
+      "url": "https://stats.nba.com/stats/winprobabilitypbp",
+      "parameters": [
+        "GameID",
+        "RunType"
       ]
     }
   ],
