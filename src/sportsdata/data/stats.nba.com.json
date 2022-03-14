@@ -70,7 +70,7 @@
     },
     {
       "name": "boxscore_four_factors_v2",
-      "url": "https://stats.nba.com/stats/boxscoremiscv2",
+      "url": "https://stats.nba.com/stats/boxscorefourfactorsv2",
       "parameters": [
         "GameID",
         "RangeType",
