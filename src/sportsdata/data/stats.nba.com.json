@@ -880,33 +880,6 @@
       ]
     },
     {
-      "name": "team_player_on_off_details",
-      "url": "https://stats.nba.com/stats/teamplayeronoffdetails",
-      "parameters": [
-        "Season",
-        "SeasonType",
-        "LeagueID",
-        "TeamID",
-        "MeasureType",
-        "PerMode",
-        "PlusMinus",
-        "PaceAdjust",
-        "Rank",
-        "Outcome",
-        "Location",
-        "Month",
-        "SeasonSegment",
-        "DateFrom",
-        "DateTo",
-        "OpponentTeamID",
-        "VsConference",
-        "VsDivision",
-        "GameSegment",
-        "Period",
-        "LastNGames"
-      ]
-    },
-    {
       "name": "player_compare",
       "url": "https://stats.nba.com/stats/playercompare",
       "parameters": [
@@ -934,7 +907,7 @@
         "LastNGames"
       ]
     },
-  {
+    {
       "name": "player_next_n_games",
       "url": "https://stats.nba.com/stats/playernextngames",
       "parameters": [
@@ -943,6 +916,33 @@
         "Season",
         "SeasonType",
         "LeagueID"
+      ]
+    },
+    {
+      "name": "shot_chart_lineup_detail",
+      "url": "https://stats.nba.com/stats/shotchartlineupdetail",
+      "parameters": [
+        "ContextMeasure",
+        "GROUP_ID",
+        "LeagueID",
+        "Period",
+        "Season",
+        "SeasonType",
+        "ContextFilter",
+        "DateFrom",
+        "DateTo",
+        "GameID",
+        "GameID",
+        "GameSegment",
+        "LastNGames",
+        "Location",
+        "Month",
+        "OpponentTeamID",
+        "Outcome",
+        "SeasonSegment",
+        "TeamID",
+        "VsConference",
+        "VsDivision"
       ]
     },
     {
@@ -986,6 +986,33 @@
         "DateFrom",
         "DateTo",
         "LeagueID"
+      ]
+    },
+    {
+      "name": "team_player_on_off_details",
+      "url": "https://stats.nba.com/stats/teamplayeronoffdetails",
+      "parameters": [
+        "Season",
+        "SeasonType",
+        "LeagueID",
+        "TeamID",
+        "MeasureType",
+        "PerMode",
+        "PlusMinus",
+        "PaceAdjust",
+        "Rank",
+        "Outcome",
+        "Location",
+        "Month",
+        "SeasonSegment",
+        "DateFrom",
+        "DateTo",
+        "OpponentTeamID",
+        "VsConference",
+        "VsDivision",
+        "GameSegment",
+        "Period",
+        "LastNGames"
       ]
     },
     {
