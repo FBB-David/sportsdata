@@ -69,6 +69,18 @@
       ]
     },
     {
+      "name": "boxscore_four_factors_v2",
+      "url": "https://stats.nba.com/stats/boxscoremiscv2",
+      "parameters": [
+        "GameID",
+        "RangeType",
+        "StartPeriod",
+        "EndPeriod",
+        "StartRange",
+        "EndRange"
+      ]
+    },
+    {
       "name": "boxscore_misc_v2",
       "url": "https://stats.nba.com/stats/boxscoremiscv2",
       "parameters": [
