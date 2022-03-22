@@ -161,6 +161,17 @@
       ]
     },
     {
+      "name": "cume_stats_player",
+      "url": "https://stats.nba.com/stats/cumestatsplayer",
+      "parameters": [
+        "GameIDs",
+        "LeagueID",
+        "PlayerID",
+        "Season",
+        "SeasonType"
+      ]
+    },
+    {
       "name": "cume_stats_player_games",
       "url": "https://stats.nba.com/stats/cumestatsplayergames",
       "parameters": [
