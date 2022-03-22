@@ -95,6 +95,13 @@
       ]
     },
     {
+      "name": "boxscore_matchups",
+      "url": "https://stats.nba.com/stats/boxscorematchups",
+      "parameters": [
+        "GameID"
+      ]
+    },
+    {
       "name": "boxscore_player_track_v2",
       "url": "https://stats.nba.com/stats/boxscoreplayertrackv2",
       "parameters": [
