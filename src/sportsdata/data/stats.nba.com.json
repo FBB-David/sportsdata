@@ -161,6 +161,21 @@
       ]
     },
     {
+      "name": "cume_stats_player_games",
+      "url": "https://stats.nba.com/stats/cumestatsplayergames",
+      "parameters": [
+        "LeagueID",
+        "Location",
+        "Outcome",
+        "PlayerID",
+        "Season",
+        "SeasonType",
+        "VsConference",
+        "VsDivision",
+        "VsTeamID"
+      ]
+    },
+    {
       "name": "draftboard",
       "url": "https://stats.nba.com/stats/draftboard",
       "parameters": [
