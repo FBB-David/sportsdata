@@ -1,4 +1,5 @@
 from ..nba.constants import *
+from .Api import Api
 import types
 from enum import Enum
 from inspect import isclass
@@ -47,22 +48,13 @@ def clean_inputs(func):
     return new_func
 
 
-class StatsNbaCom:
+class StatsNbaCom(Api):
     def __init__(self):
-        # Get a logger
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
-        self.logger = logging.getLogger('sportsdata')
+        super().__init__()
 
         # Read the specification file
         self.specs = json.loads(pkg_resources.read_text('sportsdata.data', 'stats.nba.com.json'))
         self.logger.info(self.specs.keys())
-
-        self.parameters = {}
-        for param in self.specs['parameters']:
-            self.parameters[param['name']] = {
-                'default': param['default'],
-                'values': param['values']
-            }
 
         # Create methods for each api endpoint
         for endpoint in self.specs['stats_endpoints']:
@@ -127,7 +119,7 @@ class StatsNbaCom:
             if 'log_level' in kwargs:
                 log_level = kwargs['log_level']
 
-            self2.logger.log(log_level, url)
+            self2.logger.log(log_level, f"Calling {url}")
             self2.logger.log(log_level, kwargs)
 
             # Determine the ResponseType

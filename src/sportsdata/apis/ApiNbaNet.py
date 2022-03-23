@@ -51,20 +51,12 @@ def clean_inputs(func):
 
 class ApiNbaNet(Api):
     def __init__(self):
-        # Get a logger
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
-        self.logger = logging.getLogger('sportsdata')
+        # Call Api.init()
+        super().__init__()
 
-        # Read the specification file
+        # Read the specification file for this api
         self.specs = json.loads(pkg_resources.read_text('sportsdata.data', 'api.nba.net.json'))
         self.logger.info(self.specs.keys())
-
-        self.parameters = {}
-        for param in self.specs['parameters']:
-            self.parameters[param['name']] = {
-                'default': param['default'],
-                'values': param['values']
-            }
 
         # Create methods for each api endpoint
         for endpoint in self.specs['stats_endpoints']:
