@@ -60,47 +60,6 @@ class StatsNbaCom(Api):
         for endpoint in self.specs['stats_endpoints']:
             self.add_api_method(endpoint)
 
-    @staticmethod
-    def _get_row_set(rs):
-        data = []
-        for row in rs['rowSet']:
-            data_point = dict(zip([h.lower() for h in rs['headers']], row))
-            data.append(data_point)
-        return data
-
-    @staticmethod
-    def _get_data_frames(response, rename_to={}):
-        """
-        Parse the response for any results and load them into data frames
-        Args:
-            response:
-            rename_to:
-
-        Returns:
-            All Result Sets Found as Data Frames
-
-        """
-        frames = {}
-        info = json.loads(response.text)
-        result_sets = info['resultSets']
-        for rs in result_sets:
-            rs_name = rs['name']
-            if rs_name in rename_to.keys():
-                rs_name = rename_to[rs_name]
-
-            frames[rs_name] = DataFrame(rs['rowSet'], columns=rs['headers'])
-
-        # Check if there is only one result, if so no need for a dictionary
-        if len(frames) == 1:
-            key = next(iter(frames))
-            frames = frames[key]
-
-        return frames
-
-    @staticmethod
-    def _get_dictionary(response):
-        return json.loads(response.text)
-
     def add_api_method(self, endpoint):
         """
         Dynamically builds a method for each endpoint in the specification file
