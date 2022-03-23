@@ -156,7 +156,7 @@ class StatsNbaCom:
                 # Add the parameter and its value to the dictionary of url parameters
                 url_parameters[param] = value
 
-            self2.logger.info(url_parameters)
+            self2.logger.log(log_level, url_parameters)
             request_headers = {
                 'Host': 'stats.nba.com',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
