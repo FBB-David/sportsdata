@@ -1,1 +1,2 @@
-from .stats_nba_api import StatsNbaApi
+from .StatsNbaCom import StatsNbaCom
+from .ApiNbaNet import ApiNbaNet

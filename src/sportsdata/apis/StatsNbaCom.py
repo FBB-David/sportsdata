@@ -47,7 +47,7 @@ def clean_inputs(func):
     return new_func
 
 
-class StatsNbaApi:
+class StatsNbaCom:
     def __init__(self):
         # Get a logger
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
@@ -118,11 +118,17 @@ class StatsNbaApi:
         :return:
         """
 
-        def dynamic_method(self2: StatsNbaApi, **kwargs):
+        def dynamic_method(self2: StatsNbaCom, **kwargs):
             url = endpoint['url']
             parameters = endpoint['parameters']
-            self2.logger.info(url)
-            self2.logger.info(kwargs)
+
+            # Set the log level, default to DEBUG messages
+            log_level = logging.DEBUG
+            if 'log_level' in kwargs:
+                log_level = kwargs['log_level']
+
+            self2.logger.log(log_level, url)
+            self2.logger.log(log_level, kwargs)
 
             # Determine the ResponseType
             return_type = ReturnType.DICTIONARY.value
